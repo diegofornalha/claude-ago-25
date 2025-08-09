@@ -1,0 +1,116 @@
+{
+  "name": "Todo RAG System - Knowledge Base Offline",
+  "short_name": "TodoRAG",
+  "description": "Sistema de tarefas com RAG offline-first, busca semântica e sincronização automática",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2196F3",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "id": "todo-rag-pwa",
+  "categories": ["productivity", "utilities"],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Dashboard principal"
+    },
+    {
+      "src": "/screenshots/rag-search.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Busca semântica RAG"
+    },
+    {
+      "src": "/screenshots/offline-mode.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Modo offline"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nova Tarefa",
+      "short_name": "Nova",
+      "description": "Criar uma nova tarefa",
+      "url": "/new-task",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Buscar",
+      "short_name": "Buscar",
+      "description": "Busca semântica RAG",
+      "url": "/search",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "Offline Capable",
+    "Background Sync",
+    "Periodic Sync",
+    "Push Notifications"
+  ],
+  "permissions": [
+    "storage",
+    "notifications",
+    "background-sync"
+  ],
+  "related_applications": [],
+  "iarc_rating_id": ""
+}

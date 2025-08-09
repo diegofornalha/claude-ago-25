@@ -1,0 +1,10 @@
+[
+  {
+    "sql": [
+      "CREATE TABLE \"issues\" (\n\t\"id\" integer PRIMARY KEY NOT NULL,\n\t\"title\" text NOT NULL,\n\t\"description\" text\n);\n"
+    ],
+    "bps": true,
+    "folderMillis": 1747763970739,
+    "hash": "4d1a0b31885250198f5c655cd26b8d7b1489ffa8d11994cdad500430ece64955"
+  }
+]

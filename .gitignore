@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+**/node_modules/
+.npm/
+.pnpm-store/
+
+# Python
+venv/
+**/venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Build outputs
+/dist/
+/build/
+.out/
+.next/
+coverage/
+.cache/
+.temp/
+.tmp/
+
+# Editors/IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Project-specific large/cache dirs
+mcp-rag-cache/
+mcp-rag-cache/backups/
+mcp-rag-cache/*.tar.gz
+mcp-rag-cache/*.pkl
+mcp-rag-cache/*.npy
+mcp-rag-cache/documents.json
+mcp-rag-cache/index.pkl
+mcp-rag-cache/vectors.npy
+mcp-rag-server/venv/
+mcp-rag-server/**/backups/
+
+# Local configs/secrets
+.claude/settings.local.json
+settings.local.json
+
+# Generated/runtime
+shell-snapshots/
+local/
+ide/
+

@@ -1,0 +1,62 @@
+[
+  {
+    "content": "Implementar sistema de autenticação JWT",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Corrigir bug no formulário de login: O botão de submit não está funcionando no Firefox",
+    "status": "in_progress",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Adicionar dark mode na interface",
+    "status": "pending",
+    "priority": "medium",
+    "id": "3"
+  },
+  {
+    "content": "Otimizar queries do banco de dados",
+    "status": "completed",
+    "priority": "high",
+    "id": "4"
+  },
+  {
+    "content": "Criar testes unitários para o módulo de usuários",
+    "status": "pending",
+    "priority": "medium",
+    "id": "5"
+  },
+  {
+    "content": "Documentar API REST: Adicionar exemplos de uso e casos de erro",
+    "status": "in_progress",
+    "priority": "low",
+    "id": "6"
+  },
+  {
+    "content": "Implementar rate limiting nos endpoints",
+    "status": "pending",
+    "priority": "high",
+    "id": "7"
+  },
+  {
+    "content": "Atualizar dependências do projeto",
+    "status": "completed",
+    "priority": "low",
+    "id": "8"
+  },
+  {
+    "content": "Configurar CI/CD com GitHub Actions",
+    "status": "pending",
+    "priority": "medium",
+    "id": "9"
+  },
+  {
+    "content": "Refatorar componente de listagem: Melhorar performance com virtualização",
+    "status": "in_progress",
+    "priority": "medium",
+    "id": "10"
+  }
+]

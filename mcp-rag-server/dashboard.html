@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP RAG Server - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status-healthy { background: #d1f2eb; color: #0d7039; }
+        .status-warning { background: #fef9e7; color: #b45309; }
+        .status-critical { background: #fdeaea; color: #c5392d; }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .metric-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #86868b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .metric-unit {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
+        
+        .alerts-container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .alert-critical { background: #fdeaea; border-left: 4px solid #c5392d; }
+        .alert-high { background: #fef9e7; border-left: 4px solid #b45309; }
+        .alert-medium { background: #f0f9ff; border-left: 4px solid #0369a1; }
+        .alert-low { background: #f0fdf4; border-left: 4px solid #059669; }
+        
+        .health-score {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .health-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .health-excellent { background: #059669; }
+        .health-good { background: #0369a1; }
+        .health-warning { background: #b45309; }
+        .health-critical { background: #c5392d; }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #86868b;
+        }
+        
+        .last-update {
+            font-size: 12px;
+            color: #86868b;
+            text-align: center;
+            margin-top: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>🚀 MCP RAG Server</h1>
+                <p>Sistema de Monitoramento em Tempo Real</p>
+            </div>
+            <div class="health-score">
+                <div id="healthCircle" class="health-circle health-excellent">100</div>
+                <div>
+                    <div id="systemStatus" class="status-badge status-healthy">Sistema Saudável</div>
+                    <div id="uptime" style="font-size: 12px; color: #86868b; margin-top: 4px;">Uptime: 0m</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">CPU</div>
+                <div class="metric-value" id="cpuValue">0</div>
+                <div class="metric-unit">%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Memória</div>
+                <div class="metric-value" id="memoryValue">0</div>
+                <div class="metric-unit">%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Cache RAG</div>
+                <div class="metric-value" id="cacheValue">0</div>
+                <div class="metric-unit">MB</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Documentos</div>
+                <div class="metric-value" id="docsValue">0</div>
+                <div class="metric-unit">docs</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Requisições</div>
+                <div class="metric-value" id="requestsValue">0</div>
+                <div class="metric-unit">total</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Tempo Resposta</div>
+                <div class="metric-value" id="responseTimeValue">0</div>
+                <div class="metric-unit">ms</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3>📊 Métricas do Sistema (Últimas 2 horas)</h3>
+            <canvas id="systemChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="alerts-container">
+            <h3>🚨 Alertas Recentes</h3>
+            <div id="alertsList">
+                <div class="loading">Carregando alertas...</div>
+            </div>
+        </div>
+        
+        <div class="last-update" id="lastUpdate">
+            Última atualização: --
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let refreshInterval;
+        
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            loadDashboard();
+            
+            // Atualizar a cada 30 segundos
+            refreshInterval = setInterval(loadDashboard, 30000);
+        });
+        
+        function initChart() {
+            const ctx = document.getElementById('systemChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'CPU %',
+                            data: [],
+                            borderColor: '#007AFF',
+                            backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Memória %',
+                            data: [],
+                            borderColor: '#34C759',
+                            backgroundColor: 'rgba(52, 199, 89, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Cache MB',
+                            data: [],
+                            borderColor: '#FF9500',
+                            backgroundColor: 'rgba(255, 149, 0, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Percentual (%)'
+                            },
+                            min: 0,
+                            max: 100
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Cache (MB)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        }
+        
+        async function loadDashboard() {
+            try {
+                // Carregar dashboard data (simulado)
+                const dashboardData = await loadDashboardData();
+                
+                updateMetrics(dashboardData);
+                updateChart(dashboardData);
+                updateAlerts(dashboardData);
+                updateLastUpdate();
+                
+            } catch (error) {
+                console.error('Erro ao carregar dashboard:', error);
+                showError('Erro ao conectar com o servidor');
+            }
+        }
+        
+        async function loadDashboardData() {
+            // Em produção, isto faria fetch do arquivo JSON real
+            // return fetch('/Users/agents/.claude/mcp-rag-cache/dashboard.json').then(r => r.json());
+            
+            // Dados simulados para demonstração
+            return {
+                timestamp: Date.now() / 1000,
+                status: 'healthy',
+                health_score: 95,
+                uptime: { formatted: '2h 15m' },
+                current_metrics: {
+                    cpu_percent: Math.random() * 30 + 10,
+                    memory_percent: Math.random() * 40 + 30,
+                    cache_size_mb: Math.random() * 10 + 15,
+                    document_count: 6
+                },
+                performance_stats: {
+                    total_requests: 1247,
+                    successful_requests: 1230,
+                    avg_response_time_ms: Math.random() * 200 + 50
+                },
+                recent_alerts: [
+                    {
+                        timestamp: Date.now() / 1000 - 300,
+                        metric: 'memory_percent',
+                        value: 89.2,
+                        threshold: 85,
+                        severity: 'medium'
+                    }
+                ]
+            };
+        }
+        
+        function updateMetrics(data) {
+            const metrics = data.current_metrics || {};
+            const perfStats = data.performance_stats || {};
+            
+            // Atualizar valores
+            document.getElementById('cpuValue').textContent = Math.round(metrics.cpu_percent || 0);
+            document.getElementById('memoryValue').textContent = Math.round(metrics.memory_percent || 0);
+            document.getElementById('cacheValue').textContent = (metrics.cache_size_mb || 0).toFixed(1);
+            document.getElementById('docsValue').textContent = metrics.document_count || 0;
+            document.getElementById('requestsValue').textContent = perfStats.total_requests || 0;
+            document.getElementById('responseTimeValue').textContent = Math.round(perfStats.avg_response_time_ms || 0);
+            
+            // Atualizar status e health score
+            const healthScore = data.health_score || 100;
+            const status = data.status || 'healthy';
+            const uptime = data.uptime?.formatted || '0m';
+            
+            document.getElementById('uptime').textContent = `Uptime: ${uptime}`;
+            
+            // Health circle
+            const healthCircle = document.getElementById('healthCircle');
+            healthCircle.textContent = healthScore;
+            healthCircle.className = 'health-circle ' + getHealthClass(healthScore);
+            
+            // Status badge
+            const statusBadge = document.getElementById('systemStatus');
+            statusBadge.textContent = getStatusText(status);
+            statusBadge.className = 'status-badge status-' + status;
+        }
+        
+        function updateChart(data) {
+            // Simular dados históricos
+            const now = new Date();
+            const labels = [];
+            const cpuData = [];
+            const memoryData = [];
+            const cacheData = [];
+            
+            for (let i = 23; i >= 0; i--) {
+                const time = new Date(now.getTime() - i * 5 * 60 * 1000); // A cada 5 minutos
+                labels.push(time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
+                
+                cpuData.push(Math.random() * 30 + 10);
+                memoryData.push(Math.random() * 40 + 30);
+                cacheData.push(Math.random() * 10 + 15);
+            }
+            
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = cpuData;
+            chart.data.datasets[1].data = memoryData;
+            chart.data.datasets[2].data = cacheData;
+            chart.update();
+        }
+        
+        function updateAlerts(data) {
+            const alertsList = document.getElementById('alertsList');
+            const alerts = data.recent_alerts || [];
+            
+            if (alerts.length === 0) {
+                alertsList.innerHTML = '<div style="text-align: center; color: #86868b; padding: 20px;">✅ Nenhum alerta ativo</div>';
+                return;
+            }
+            
+            alertsList.innerHTML = alerts.map(alert => {
+                const time = new Date(alert.timestamp * 1000).toLocaleTimeString('pt-BR');
+                return `
+                    <div class="alert-item alert-${alert.severity}">
+                        <div>
+                            <strong>${alert.metric}</strong>: ${alert.value.toFixed(1)} > ${alert.threshold} 
+                            <small style="color: #86868b; margin-left: 8px;">${time}</small>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateLastUpdate() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = 
+                `Última atualização: ${now.toLocaleTimeString('pt-BR')}`;
+        }
+        
+        function getHealthClass(score) {
+            if (score >= 90) return 'health-excellent';
+            if (score >= 70) return 'health-good';
+            if (score >= 50) return 'health-warning';
+            return 'health-critical';
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'healthy': 'Sistema Saudável',
+                'warning': 'Atenção Necessária',
+                'critical': 'Estado Crítico'
+            };
+            return statusMap[status] || 'Estado Desconhecido';
+        }
+        
+        function showError(message) {
+            const alertsList = document.getElementById('alertsList');
+            alertsList.innerHTML = `
+                <div class="alert-item alert-critical">
+                    <div>🚨 ${message}</div>
+                </div>
+            `;
+        }
+        
+        // Cleanup ao sair da página
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>

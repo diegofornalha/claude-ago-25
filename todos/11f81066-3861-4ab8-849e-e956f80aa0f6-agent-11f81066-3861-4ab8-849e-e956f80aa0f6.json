@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Analisar estrutura dos shell snapshots",
+    "status": "in_progress",
+    "id": "1"
+  },
+  {
+    "content": "Testar restauração de snapshot",
+    "status": "pending",
+    "id": "2"
+  },
+  {
+    "content": "Demonstrar benefícios práticos",
+    "status": "pending",
+    "id": "3"
+  }
+]
