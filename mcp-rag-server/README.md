@@ -50,9 +50,9 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "rag-server-v2": {
+    "rag-server": {
       "command": "/Users/agents/.claude/mcp-rag-server/venv/bin/python",
-      "args": ["/Users/agents/.claude/mcp-rag-server/rag_server_v2.py"],
+      "args": ["/Users/agents/.claude/mcp-rag-server/rag_server.py"],
       "env": {
         "PYTHONPATH": "/Users/agents/.claude/mcp-rag-server"
       }
@@ -84,14 +84,14 @@ RAG_EMBEDDING_BATCH_SIZE=32
 
 After configuration, these tools are available in Claude:
 
-- `mcp_rag-server-v2_search` - Semantic search
-- `mcp_rag-server-v2_search_by_tags` - Search by tags
-- `mcp_rag-server-v2_search_by_category` - Search by category  
-- `mcp_rag-server-v2_add` - Add document
-- `mcp_rag-server-v2_update` - Update document
-- `mcp_rag-server-v2_remove` - Remove document
-- `mcp_rag-server-v2_list` - List all documents
-- `mcp_rag-server-v2_stats` - Get statistics
+- `mcp_rag-server_search` - Semantic search
+- `mcp_rag-server_search_by_tags` - Search by tags
+- `mcp_rag-server_search_by_category` - Search by category  
+- `mcp_rag-server_add` - Add document
+- `mcp_rag-server_update` - Update document
+- `mcp_rag-server_remove` - Remove document
+- `mcp_rag-server_list` - List all documents
+- `mcp_rag-server_stats` - Get statistics
 
 ### Command Line Testing
 

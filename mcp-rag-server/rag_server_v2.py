@@ -7,11 +7,16 @@ import sys
 import os
 import hashlib
 import time
+import uuid
+import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 import numpy as np
 from collections import defaultdict
+
+# Importar configurações
+from config import config
 
 # Importações para embeddings
 try:
@@ -27,48 +32,103 @@ try:
 except ImportError:
     HAS_TFIDF = False
 
-# Cache paths
-CACHE_PATH = Path.home() / ".claude" / "mcp-rag-cache"
-CACHE_FILE = CACHE_PATH / "documents.json"
-VECTORS_FILE = CACHE_PATH / "vectors.npy"
-INDEX_FILE = CACHE_PATH / "index.pkl"
-STATS_FILE = CACHE_PATH / "stats.json"
+# Cache paths da configuração
+CACHE_PATH = config.CACHE_PATH
+CACHE_FILE = config.get_cache_file("documents.json")
+VECTORS_FILE = config.get_cache_file("vectors.npy")
+INDEX_FILE = config.get_cache_file("index.pkl")
+STATS_FILE = config.get_cache_file("stats.json")
+LOG_FILE = config.get_cache_file("rag_server.log")
+
+# Configurar logging estruturado
+def setup_logging():
+    """Configura sistema de logging estruturado"""
+    config.ensure_cache_dir()
+    
+    # Configurar handlers
+    handlers = [
+        logging.FileHandler(LOG_FILE, encoding='utf-8'),
+    ]
+    
+    # Adicionar handler para stderr se configurado
+    if config.LOG_TO_STDERR:
+        handlers.append(logging.StreamHandler(sys.stderr))
+    
+    logging.basicConfig(
+        level=getattr(logging, config.LOG_LEVEL, logging.INFO),
+        format=config.LOG_FORMAT,
+        handlers=handlers,
+        force=True
+    )
+    
+    return logging.getLogger('rag_server_v2')
+
+# Inicializar logger
+logger = setup_logging()
 
 class RAGServerV2:
     def __init__(self):
+        logger.info("Inicializando RAGServerV2")
         self.documents = []
         self.embeddings = None
         self.model = None
         self.tfidf = None
         self.tfidf_matrix = None
         self.document_index = {}  # id -> index mapping
+        self.legacy_id_map = {}  # legacy_id -> new_id mapping para retrocompatibilidade
         self.tags_index = defaultdict(set)  # tag -> document_ids
         self.categories_index = defaultdict(set)  # category -> document_ids
         
-        # Inicializar modelo de embeddings se disponível
-        if HAS_EMBEDDINGS:
+        # Inicializar modelo de embeddings se configurado
+        if HAS_EMBEDDINGS and config.USE_EMBEDDINGS:
             try:
-                self.model = SentenceTransformer('all-MiniLM-L6-v2')
-            except:
+                logger.info(f"Carregando modelo de embeddings: {config.EMBEDDING_MODEL}")
+                self.model = SentenceTransformer(config.EMBEDDING_MODEL)
+                logger.info("Modelo de embeddings carregado com sucesso")
+            except Exception as e:
+                logger.warning(f"Falha ao carregar modelo de embeddings: {e}")
                 self.model = None
+        else:
+            if not config.USE_EMBEDDINGS:
+                logger.info("Embeddings desabilitados por configuração")
+            else:
+                logger.warning("sentence-transformers não instalado - usando fallback TF-IDF")
         
-        # Inicializar TF-IDF como fallback
-        if HAS_TFIDF:
-            self.tfidf = TfidfVectorizer(max_features=1000, stop_words='english')
+        # Inicializar TF-IDF se configurado
+        if HAS_TFIDF and config.USE_TFIDF:
+            self.tfidf = TfidfVectorizer(
+                max_features=config.TFIDF_MAX_FEATURES,
+                stop_words=config.TFIDF_STOP_WORDS
+            )
+            logger.info(f"TF-IDF inicializado (max_features={config.TFIDF_MAX_FEATURES})")
         
         self.load_documents()
         self.build_indices()
+        logger.info(f"RAGServerV2 inicializado com {len(self.documents)} documentos")
     
     def load_documents(self):
         """Carrega documentos do cache com suporte a novos campos"""
         if CACHE_FILE.exists():
             try:
+                logger.info(f"Carregando documentos de {CACHE_FILE}")
                 with open(CACHE_FILE, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     self.documents = data.get('documents', [])
+                    logger.info(f"Carregados {len(self.documents)} documentos do cache")
                     
                     # Migrar documentos antigos para novo formato
+                    migrated_count = 0
                     for doc in self.documents:
+                        # Migrar IDs antigos para UUID4 se configurado
+                        if config.AUTO_MIGRATE_IDS:
+                            old_id = doc.get('id', '')
+                            if old_id and (old_id.startswith('doc_') or not self._is_valid_uuid(old_id)):
+                                # Manter ID antigo mas adicionar UUID4 como 'uuid'
+                                doc['legacy_id'] = old_id
+                                doc['id'] = str(uuid.uuid4())
+                                migrated_count += 1
+                                logger.debug(f"Migrado ID legado {old_id} para UUID {doc['id']}")
+                        
                         if 'tags' not in doc:
                             doc['tags'] = []
                         if 'category' not in doc:
@@ -81,8 +141,10 @@ class RAGServerV2:
                             doc['updated_at'] = doc.get('timestamp', datetime.now().isoformat())
                         if 'version' not in doc:
                             doc['version'] = 1
+                    if migrated_count > 0:
+                        logger.info(f"Migrados {migrated_count} documentos para UUID4")
             except Exception as e:
-                print(f"Erro ao carregar documentos: {e}", file=sys.stderr)
+                logger.error(f"Erro ao carregar documentos: {e}")
                 self.documents = []
         
         # Carregar embeddings se existirem
@@ -144,6 +206,27 @@ class RAGServerV2:
         """Calcula hash do conteúdo para deduplicação"""
         return hashlib.sha256(content.encode()).hexdigest()[:16]
     
+    def _is_valid_uuid(self, value: str) -> bool:
+        """Verifica se uma string é um UUID válido"""
+        try:
+            uuid.UUID(value)
+            return True
+        except (ValueError, AttributeError):
+            return False
+    
+    def _resolve_id(self, doc_id: str) -> str:
+        """Resolve ID legado para UUID atual se necessário"""
+        # Se for um UUID válido, retornar como está
+        if self._is_valid_uuid(doc_id):
+            return doc_id
+        
+        # Tentar resolver ID legado
+        if doc_id in self.legacy_id_map:
+            return self.legacy_id_map[doc_id]
+        
+        # Retornar o ID original se não encontrar mapeamento
+        return doc_id
+    
     def semantic_search(self, query: str, limit: int = 5) -> List[Dict]:
         """Busca semântica usando embeddings ou TF-IDF"""
         if not self.documents:
@@ -170,14 +253,15 @@ class RAGServerV2:
                 indices = np.argsort(similarities)[::-1][:limit]
                 
                 for idx in indices:
-                    if similarities[idx] > 0.1:  # Threshold mínimo
+                    if similarities[idx] > config.SIMILARITY_THRESHOLD:
                         doc = self.documents[idx].copy()
                         doc['score'] = float(similarities[idx])
                         results.append(doc)
                 
+                logger.info(f"Busca semântica retornou {len(results)} resultados")
                 return results
             except Exception as e:
-                print(f"Erro na busca semântica: {e}", file=sys.stderr)
+                logger.warning(f"Erro na busca com embeddings, tentando fallback: {e}")
         
         # Fallback para TF-IDF
         if HAS_TFIDF and self.tfidf_matrix is not None:
@@ -246,9 +330,10 @@ class RAGServerV2:
     
     def add_document(self, doc: Dict) -> Dict:
         """Adiciona documento com deduplicação e versionamento"""
-        # Gerar ID se não existir
+        # Gerar ID se não existir - usar UUID4 para novos documentos
         if 'id' not in doc:
-            doc['id'] = f"doc_{int(time.time() * 1000)}"
+            doc['id'] = str(uuid.uuid4())
+            logger.debug(f"Novo documento criado com ID: {doc['id']}")
         
         # Adicionar campos obrigatórios
         content = doc.get('content', '')
@@ -263,24 +348,29 @@ class RAGServerV2:
         if 'category' not in doc:
             doc['category'] = 'uncategorized'
         
-        # Verificar duplicação
-        for existing_doc in self.documents:
-            if existing_doc.get('hash') == doc['hash']:
-                # Documento duplicado - atualizar metadados apenas
-                existing_doc['updated_at'] = doc['updated_at']
-                existing_doc['version'] = existing_doc.get('version', 1) + 1
+        # Verificar duplicação se configurado
+        if config.ENABLE_DEDUPLICATION:
+            for existing_doc in self.documents:
+                if existing_doc.get('hash') == doc['hash']:
+                    # Documento duplicado - atualizar metadados apenas
+                    existing_doc['updated_at'] = doc['updated_at']
+                    if config.ENABLE_VERSIONING:
+                        existing_doc['version'] = existing_doc.get('version', 1) + 1
                 
-                # Mesclar tags
-                existing_tags = set(existing_doc.get('tags', []))
-                new_tags = set(doc.get('tags', []))
-                existing_doc['tags'] = list(existing_tags.union(new_tags))
-                
-                self.save_documents()
-                self.build_indices()
-                return existing_doc
+                    # Mesclar tags
+                    existing_tags = set(existing_doc.get('tags', []))
+                    new_tags = set(doc.get('tags', []))
+                    existing_doc['tags'] = list(existing_tags.union(new_tags))
+                    
+                    logger.info(f"Documento duplicado encontrado (ID: {existing_doc['id']}), versão incrementada para {existing_doc.get('version', 1)}")
+                    if config.AUTO_SAVE:
+                        self.save_documents()
+                    self.build_indices()
+                    return existing_doc
         
         # Adicionar novo documento
         self.documents.append(doc)
+        logger.info(f"Novo documento adicionado: {doc.get('title', 'Sem título')} (ID: {doc['id']})")
         
         # Atualizar embeddings se disponível
         if self.model and HAS_EMBEDDINGS:
@@ -300,11 +390,14 @@ class RAGServerV2:
         return doc
     
     def update_document(self, doc_id: str, updates: Dict) -> bool:
-        """Atualiza documento existente"""
-        if doc_id not in self.document_index:
+        """Atualiza documento existente (suporta IDs legados)"""
+        # Resolver ID legado se necessário
+        resolved_id = self._resolve_id(doc_id)
+        
+        if resolved_id not in self.document_index:
             return False
         
-        idx = self.document_index[doc_id]
+        idx = self.document_index[resolved_id]
         doc = self.documents[idx]
         
         # Atualizar campos
@@ -333,11 +426,14 @@ class RAGServerV2:
         return True
     
     def remove_document(self, doc_id: str) -> bool:
-        """Remove documento e seus embeddings"""
-        if doc_id not in self.document_index:
+        """Remove documento e seus embeddings (suporta IDs legados)"""
+        # Resolver ID legado se necessário
+        resolved_id = self._resolve_id(doc_id)
+        
+        if resolved_id not in self.document_index:
             return False
         
-        idx = self.document_index[doc_id]
+        idx = self.document_index[resolved_id]
         
         # Remover documento
         self.documents.pop(idx)
@@ -442,13 +538,13 @@ def handle_request(request):
     
     if method == 'initialize':
         return {
-            'protocolVersion': '2024-11-05',
+            'protocolVersion': config.PROTOCOL_VERSION,
             'capabilities': {
                 'tools': {}
             },
             'serverInfo': {
-                'name': 'rag-server-v2',
-                'version': '2.0.0'
+                'name': config.SERVER_NAME,
+                'version': config.SERVER_VERSION
             }
         }
     
@@ -691,15 +787,22 @@ def handle_request(request):
 
 def main():
     """Loop principal do servidor MCP"""
+    logger.info("Servidor MCP RAG v2 iniciado")
+    logger.info(f"Cache path: {CACHE_PATH}")
+    logger.info(f"Embeddings disponíveis: {HAS_EMBEDDINGS}")
+    logger.info(f"TF-IDF disponível: {HAS_TFIDF}")
+    
     while True:
         try:
             # Ler linha do stdin
             line = sys.stdin.readline()
             if not line:
+                logger.info("EOF recebido, encerrando servidor")
                 break
             
             # Parse JSON-RPC request
             request = json.loads(line)
+            logger.debug(f"Request recebido: {request.get('method', 'unknown')}")
             
             # Processar requisição
             response = handle_request(request)
@@ -723,8 +826,9 @@ def main():
                 print(json.dumps(output))
                 sys.stdout.flush()
         
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
             # Erro de parsing
+            logger.error(f"Erro ao fazer parse do JSON: {e}")
             error_response = {
                 'jsonrpc': '2.0',
                 'id': None,
@@ -738,6 +842,7 @@ def main():
         
         except Exception as e:
             # Erro interno
+            logger.error(f"Erro não tratado no loop principal: {e}", exc_info=True)
             error_response = {
                 'jsonrpc': '2.0',
                 'id': request.get('id') if 'request' in locals() else None,

@@ -1,0 +1,185 @@
+version: '3.8'
+
+services:
+  # MCP RAG Server
+  rag-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-rag-server:latest
+    container_name: mcp-rag-server
+    restart: unless-stopped
+    environment:
+      # Server configuration
+      - RAG_SERVER_MODE=enhanced
+      - RAG_SERVER_NAME=rag-server-docker
+      - RAG_SERVER_VERSION=3.1.0
+      - RAG_PROTOCOL_VERSION=2024-11-05
+      
+      # Model settings
+      - RAG_USE_EMBEDDINGS=true
+      - RAG_USE_TFIDF=true
+      - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
+      
+      # Performance settings
+      - RAG_MAX_DOCUMENTS=10000
+      - RAG_EMBEDDING_BATCH_SIZE=32
+      - RAG_SEARCH_LIMIT_DEFAULT=5
+      - RAG_SIMILARITY_THRESHOLD=0.1
+      
+      # Feature flags
+      - RAG_ENABLE_DEDUPLICATION=true
+      - RAG_ENABLE_VERSIONING=true
+      - RAG_AUTO_MIGRATE_IDS=true
+      
+      # Logging
+      - RAG_LOG_LEVEL=INFO
+      - RAG_DEBUG=false
+      
+      # Cache settings
+      - RAG_CACHE_DIR=/data/cache
+      - RAG_AUTO_SAVE=true
+      - RAG_SAVE_STATS=true
+    
+    volumes:
+      # Persistent data storage
+      - rag-data:/data/cache
+      - ./logs:/app/logs
+    
+    # For MCP protocol via stdin/stdout
+    stdin_open: true
+    tty: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import rag_server; print('healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Network
+    networks:
+      - rag-network
+
+  # REST API Server (optional)
+  rag-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-rag-server:latest
+    container_name: mcp-rag-api
+    restart: unless-stopped
+    command: ["python", "create_api_endpoint.py"]
+    environment:
+      - FLASK_PORT=5001
+      - FLASK_ENV=production
+      - RAG_SERVER_MODE=enhanced
+      - RAG_LOG_LEVEL=INFO
+      - RAG_CACHE_DIR=/data/cache
+    volumes:
+      - rag-data:/data/cache
+    ports:
+      - "5001:5001"
+    depends_on:
+      - rag-server
+    networks:
+      - rag-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Development environment (optional)
+  rag-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-rag-server:latest
+    container_name: mcp-rag-dev
+    restart: "no"
+    command: ["/bin/bash"]
+    environment:
+      - RAG_DEV_MODE=true
+      - RAG_VERBOSE=true
+      - RAG_LOG_LEVEL=DEBUG
+      - RAG_DEBUG=true
+      - RAG_CACHE_DIR=/data/cache
+    volumes:
+      - rag-data:/data/cache
+      - .:/app
+      - ./venv:/app/venv
+    stdin_open: true
+    tty: true
+    networks:
+      - rag-network
+    profiles:
+      - dev
+
+  # Test runner (optional)
+  rag-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-rag-server:latest
+    container_name: mcp-rag-test
+    restart: "no"
+    command: ["bash", "-c", "python test_mcp.py && python test_uuid_migration.py && python test_logging.py && python test_config.py && pytest test_rag_server.py -v"]
+    environment:
+      - RAG_CACHE_DIR=/tmp/test-cache
+      - RAG_LOG_LEVEL=DEBUG
+    volumes:
+      - ./test-results:/app/test-results
+    networks:
+      - rag-network
+    profiles:
+      - test
+
+volumes:
+  rag-data:
+    driver: local
+    name: mcp-rag-data
+
+networks:
+  rag-network:
+    driver: bridge
+    name: mcp-rag-network
+
+# Usage examples:
+# 
+# 1. Start main services:
+#    docker-compose up -d
+#
+# 2. Start with API server:
+#    docker-compose up -d rag-server rag-api
+#
+# 3. Run tests:
+#    docker-compose --profile test up rag-test
+#
+# 4. Development mode:
+#    docker-compose --profile dev up rag-dev
+#
+# 5. View logs:
+#    docker-compose logs -f rag-server
+#
+# 6. Execute MCP commands:
+#    echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}' | \
+#    docker-compose exec -T rag-server python rag_server.py
+#
+# 7. Scale services:
+#    docker-compose up -d --scale rag-api=3
+#
+# 8. Backup data:
+#    docker run --rm -v mcp-rag-data:/data -v $(pwd):/backup \
+#    alpine tar czf /backup/rag-backup.tar.gz -C /data .

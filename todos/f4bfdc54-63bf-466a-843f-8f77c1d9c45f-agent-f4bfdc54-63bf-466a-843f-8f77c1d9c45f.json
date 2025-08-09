@@ -21,32 +21,32 @@
   },
   {
     "content": "[RAG] Adicionar UUID4 para IDs com retrocompatibilidade",
-    "status": "in_progress",
+    "status": "completed",
     "id": "5"
   },
   {
     "content": "[RAG] Implementar logging estruturado",
-    "status": "pending",
+    "status": "completed",
     "id": "6"
   },
   {
     "content": "[RAG] Adicionar configuração via environment variables",
-    "status": "pending",
+    "status": "completed",
     "id": "7"
   },
   {
     "content": "[RAG] Criar suite de testes com pytest",
-    "status": "pending",
+    "status": "completed",
     "id": "8"
   },
   {
     "content": "[RAG] Configurar GitHub Actions CI",
-    "status": "pending",
+    "status": "completed",
     "id": "9"
   },
   {
     "content": "[RAG] Criar Dockerfile e docker-compose",
-    "status": "pending",
+    "status": "completed",
     "id": "10"
   }
 ]

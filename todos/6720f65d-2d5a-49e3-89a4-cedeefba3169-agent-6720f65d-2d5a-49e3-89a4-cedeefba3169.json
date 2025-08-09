@@ -1,32 +1,27 @@
 [
   {
-    "content": "[DEPS] Atualizar requirements.txt com versões fixas",
+    "content": "Testar Makefile",
     "status": "completed",
     "id": "1"
   },
   {
-    "content": "[DOC] Criar README.md completo",
+    "content": "Testar servidor UUID melhorado",
     "status": "completed",
     "id": "2"
   },
   {
-    "content": "[DX] Criar Makefile com comandos úteis",
+    "content": "Testar API REST",
     "status": "completed",
     "id": "3"
   },
   {
-    "content": "[CI/CD] Configurar GitHub Actions",
+    "content": "Testar busca vetorial",
     "status": "completed",
     "id": "4"
   },
   {
-    "content": "[CODE] Melhorar IDs com UUID4",
+    "content": "Verificar deduplicação",
     "status": "completed",
     "id": "5"
-  },
-  {
-    "content": "[SEC] Criar .env.example",
-    "status": "completed",
-    "id": "6"
   }
 ]

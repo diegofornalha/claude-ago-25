@@ -1,32 +1,17 @@
 [
   {
-    "content": "Atualizar requirements.txt com dependências do Episodic RAG",
+    "content": "Criar arquivo unificado rag_server.py com anotação de versão",
     "status": "completed",
     "id": "1"
   },
   {
-    "content": "Criar README.md completo com documentação do Episodic RAG",
+    "content": "Testar servidor unificado com todas as 8 ferramentas MCP",
     "status": "completed",
     "id": "2"
   },
   {
-    "content": "Desenvolver Makefile com comandos para ambos RAGs",
+    "content": "Atualizar configuração do Claude Desktop para usar arquivo unificado",
     "status": "completed",
     "id": "3"
-  },
-  {
-    "content": "Integrar Episodic RAG ao rag_server_v2",
-    "status": "completed",
-    "id": "4"
-  },
-  {
-    "content": "Configurar GitHub Actions para testes",
-    "status": "completed",
-    "id": "5"
-  },
-  {
-    "content": "Criar .env.example com configurações",
-    "status": "completed",
-    "id": "6"
   }
 ]

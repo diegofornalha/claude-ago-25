@@ -1,0 +1,8 @@
+{
+  "total_episodes": 8,
+  "semantic_patterns": 6,
+  "working_memory_size": 1,
+  "avg_success_rate": 0.45,
+  "total_searches": 8,
+  "cache_size": 3
+}

@@ -1,9 +1,9 @@
 # MCP RAG Server v3 - Production Dependencies
 
 # Core ML dependencies
-numpy==1.24.3  # Compatible with most systems
-scikit-learn==1.3.0
-scipy==1.13.1
+numpy==2.2.6  # Updated for Python 3.13 compatibility
+scikit-learn==1.6.1
+scipy==1.15.3
 
 # Embeddings and semantic search
 sentence-transformers==2.2.2  # RECOMMENDED: Enable for semantic search
