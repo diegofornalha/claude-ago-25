@@ -1,22 +1,32 @@
 [
   {
-    "content": "Verificar se a API está rodando",
+    "content": "[DEPS] Atualizar requirements.txt com versões fixas",
     "status": "completed",
     "id": "1"
   },
   {
-    "content": "Verificar se o frontend está acessível",
+    "content": "[DOC] Criar README.md completo",
     "status": "completed",
     "id": "2"
   },
   {
-    "content": "Testar busca vetorial",
+    "content": "[DX] Criar Makefile com comandos úteis",
     "status": "completed",
     "id": "3"
   },
   {
-    "content": "Confirmar integração completa",
+    "content": "[CI/CD] Configurar GitHub Actions",
     "status": "completed",
     "id": "4"
+  },
+  {
+    "content": "[CODE] Melhorar IDs com UUID4",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "[SEC] Criar .env.example",
+    "status": "completed",
+    "id": "6"
   }
 ]

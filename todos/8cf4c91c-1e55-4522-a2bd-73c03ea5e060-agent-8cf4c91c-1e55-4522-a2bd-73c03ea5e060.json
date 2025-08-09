@@ -1,22 +1,32 @@
 [
   {
-    "content": "Executar script de organização para migrar estrutura",
+    "content": "Atualizar requirements.txt com dependências do Episodic RAG",
     "status": "completed",
     "id": "1"
   },
   {
-    "content": "Configurar cada sessão para usar contextos específicos",
+    "content": "Criar README.md completo com documentação do Episodic RAG",
     "status": "completed",
     "id": "2"
   },
   {
-    "content": "Implementar verificação automática de conflitos",
+    "content": "Desenvolver Makefile com comandos para ambos RAGs",
     "status": "completed",
     "id": "3"
   },
   {
-    "content": "Criar documentação de uso para as sessões",
+    "content": "Integrar Episodic RAG ao rag_server_v2",
     "status": "completed",
     "id": "4"
+  },
+  {
+    "content": "Configurar GitHub Actions para testes",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "Criar .env.example com configurações",
+    "status": "completed",
+    "id": "6"
   }
 ]
