@@ -1,22 +1,52 @@
 [
   {
-    "content": "Testar o servidor MCP RAG v2 com protocolo MCP",
+    "content": "[RAG] Criar requirements.txt com versões fixadas",
     "status": "completed",
     "id": "1"
   },
   {
-    "content": "Adicionar documento de teste via MCP",
+    "content": "[RAG] Criar script setup.sh para instalação automática",
     "status": "completed",
     "id": "2"
   },
   {
-    "content": "Fazer busca semântica via MCP",
+    "content": "[RAG] Adicionar README.md com documentação básica",
     "status": "completed",
     "id": "3"
   },
   {
-    "content": "Verificar estatísticas via MCP",
+    "content": "[RAG] Criar teste de smoke para validar MCP",
     "status": "completed",
     "id": "4"
+  },
+  {
+    "content": "[RAG] Adicionar UUID4 para IDs com retrocompatibilidade",
+    "status": "in_progress",
+    "id": "5"
+  },
+  {
+    "content": "[RAG] Implementar logging estruturado",
+    "status": "pending",
+    "id": "6"
+  },
+  {
+    "content": "[RAG] Adicionar configuração via environment variables",
+    "status": "pending",
+    "id": "7"
+  },
+  {
+    "content": "[RAG] Criar suite de testes com pytest",
+    "status": "pending",
+    "id": "8"
+  },
+  {
+    "content": "[RAG] Configurar GitHub Actions CI",
+    "status": "pending",
+    "id": "9"
+  },
+  {
+    "content": "[RAG] Criar Dockerfile e docker-compose",
+    "status": "pending",
+    "id": "10"
   }
 ]
