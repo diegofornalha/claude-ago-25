@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Criar script wrapper start-rag-server.sh para carregar variáveis de ambiente",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Adicionar configuração do RAG Server ao Claude Code usando claude mcp add",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Criar documentação adaptada COMO_CONFIGUREI_MCP_RAG_SERVER.md",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Testar conexão e listar ferramentas MCP disponíveis",
+    "status": "completed",
+    "id": "4"
+  }
+]

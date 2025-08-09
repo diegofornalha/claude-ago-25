@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Verificar integração dos documentos A2A no servidor MCP RAG",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Diagnosticar por que os documentos não aparecem nas buscas MCP",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Criar script para ingerir documentos A2A no servidor MCP RAG",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Sincronizar cache do frontend com o servidor RAG",
+    "status": "completed",
+    "id": "4"
+  }
+]
