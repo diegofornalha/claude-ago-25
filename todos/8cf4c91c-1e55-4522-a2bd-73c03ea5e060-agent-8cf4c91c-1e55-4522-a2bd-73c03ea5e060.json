@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Executar script de organização para migrar estrutura",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Configurar cada sessão para usar contextos específicos",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Implementar verificação automática de conflitos",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Criar documentação de uso para as sessões",
+    "status": "completed",
+    "id": "4"
+  }
+]

@@ -1,8 +1,9 @@
 'use client'
 
-import { RAGManager } from '@/components/RAGManager'
+import { RAGManagerV2 } from '@/components/RAGManagerV2'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Brain, Database, Shield, Zap } from 'lucide-react'
 
 export default function RAGPage() {
   return (
@@ -14,20 +15,57 @@ export default function RAGPage() {
         </p>
       </div>
 
-      <Alert>
-        <span className="text-lg">ℹ️</span>
-        <AlertTitle>Como funciona</AlertTitle>
-        <AlertDescription>
-          <ul className="list-disc list-inside space-y-1 mt-2">
-            <li>WebFetch captura conteúdo de páginas web</li>
-            <li>Documentos são salvos localmente em <code>~/.claude/mcp-rag-cache/</code></li>
-            <li>Busca offline usando vetorização TF-IDF</li>
-            <li>100% local, nada é enviado para a nuvem</li>
-          </ul>
-        </AlertDescription>
-      </Alert>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="pb-3">
+            <Brain className="h-8 w-8 text-primary mb-2" />
+            <CardTitle className="text-sm">Busca Semântica</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xs text-muted-foreground">
+              Embeddings com all-MiniLM-L6-v2 para busca inteligente
+            </p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="pb-3">
+            <Database className="h-8 w-8 text-primary mb-2" />
+            <CardTitle className="text-sm">Cache Local</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xs text-muted-foreground">
+              Documentos salvos em ~/.claude/mcp-rag-cache/
+            </p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="pb-3">
+            <Shield className="h-8 w-8 text-primary mb-2" />
+            <CardTitle className="text-sm">100% Privado</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xs text-muted-foreground">
+              Todos os dados ficam no seu dispositivo
+            </p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="pb-3">
+            <Zap className="h-8 w-8 text-primary mb-2" />
+            <CardTitle className="text-sm">Alta Performance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xs text-muted-foreground">
+              Deduplicação automática e índices otimizados
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
-      <RAGManager />
+      <RAGManagerV2 />
 
       <Card>
         <CardHeader>

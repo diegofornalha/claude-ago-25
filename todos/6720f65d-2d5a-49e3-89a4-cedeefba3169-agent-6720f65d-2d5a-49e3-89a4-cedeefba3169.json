@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Verificar se a API está rodando",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Verificar se o frontend está acessível",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Testar busca vetorial",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Confirmar integração completa",
+    "status": "completed",
+    "id": "4"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Testar o servidor MCP RAG v2 com protocolo MCP",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Adicionar documento de teste via MCP",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Fazer busca semântica via MCP",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Verificar estatísticas via MCP",
+    "status": "completed",
+    "id": "4"
+  }
+]
