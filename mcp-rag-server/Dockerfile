@@ -57,7 +57,7 @@ ENV RAG_CACHE_DIR=/home/raguser/.claude/mcp-rag-cache \
     RAG_USE_EMBEDDINGS=true \
     RAG_USE_TFIDF=true \
     RAG_MAX_DOCUMENTS=10000 \
-    RAG_SERVER_NAME=rag-server-docker \
+    RAG_SERVER_NAME=rag-server \
     RAG_SERVER_VERSION=3.1.0 \
     PYTHONUNBUFFERED=1
 

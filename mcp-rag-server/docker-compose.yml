@@ -12,7 +12,7 @@ services:
     environment:
       # Server configuration
       - RAG_SERVER_MODE=enhanced
-      - RAG_SERVER_NAME=rag-server-docker
+      - RAG_SERVER_NAME=rag-server
       - RAG_SERVER_VERSION=3.1.0
       - RAG_PROTOCOL_VERSION=2024-11-05
       

@@ -38,8 +38,8 @@ class Config:
                                     '%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
         
         # Server settings
-        self.SERVER_NAME = os.getenv('RAG_SERVER_NAME', 'rag-server-v2')
-        self.SERVER_VERSION = os.getenv('RAG_SERVER_VERSION', '3.0.0')
+        self.SERVER_NAME = os.getenv('RAG_SERVER_NAME', 'rag-server')
+        self.SERVER_VERSION = os.getenv('RAG_SERVER_VERSION', '3.1.0')
         self.PROTOCOL_VERSION = os.getenv('RAG_PROTOCOL_VERSION', '2024-11-05')
         
         # Feature flags
