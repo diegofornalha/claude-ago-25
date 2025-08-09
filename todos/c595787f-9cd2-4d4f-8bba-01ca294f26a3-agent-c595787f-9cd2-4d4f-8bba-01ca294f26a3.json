@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Identificar propósito do projeto e comandos principais",
+    "status": "in_progress",
+    "id": "todo-1"
+  },
+  {
+    "content": "Ler arquivos CLAUDE.md do workspace",
+    "status": "pending",
+    "id": "todo-2"
+  },
+  {
+    "content": "Listar agentes e fluxos SPARC mencionados",
+    "status": "pending",
+    "id": "todo-3"
+  },
+  {
+    "content": "Resumir funcionalidades principais em PT-BR",
+    "status": "pending",
+    "id": "todo-4"
+  },
+  {
+    "content": "Perguntar ao usuário se quer análise mais profunda",
+    "status": "pending",
+    "id": "todo-5"
+  }
+]

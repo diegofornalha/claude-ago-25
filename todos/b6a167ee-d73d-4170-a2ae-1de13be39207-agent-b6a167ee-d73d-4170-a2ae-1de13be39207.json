@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Criar guia de integração do ACP SDK",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Documentar configuração de ambiente",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Detalhar processo de registro de agente",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Mostrar exemplos de código",
+    "status": "completed",
+    "id": "4"
+  }
+]

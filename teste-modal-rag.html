@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Modal RAG</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .document-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .document-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .document-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        .document-preview {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .view-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .view-button:hover {
+            background: #2563eb;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .modal.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .close-button:hover {
+            color: #1f2937;
+        }
+        .markdown-content {
+            line-height: 1.8;
+            color: #374151;
+        }
+        .markdown-content h1 { font-size: 28px; margin: 20px 0; }
+        .markdown-content h2 { font-size: 24px; margin: 18px 0; }
+        .markdown-content h3 { font-size: 20px; margin: 16px 0; }
+        .markdown-content p { margin: 12px 0; }
+        .markdown-content ul { margin: 12px 0; padding-left: 24px; }
+        .markdown-content li { margin: 6px 0; }
+        .markdown-content a { color: #3b82f6; text-decoration: none; }
+        .markdown-content a:hover { text-decoration: underline; }
+        .markdown-content code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .markdown-content pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 RAG Manager - Visualização de Documentos</h1>
+        <p style="color: #6b7280; margin-bottom: 30px;">
+            Clique no documento ou no botão "Ver Detalhes" para visualizar o conteúdo completo formatado
+        </p>
+
+        <div class="document-card" onclick="openModal()">
+            <div class="document-title">https://a2aprotocol.ai/blog</div>
+            <div class="document-preview">
+                Blog | A2A Protocol A2A Protocol About Features How it Works Developers Tools Blog 8/7 Learn More Blog Explore the latest insights, tutorials, and best practice...
+            </div>
+            <button class="view-button" onclick="openModal(event)">👁️ Ver Detalhes</button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Blog | A2A Protocol</h2>
+            </div>
+            <div class="modal-body">
+                <div class="markdown-content">
+                    <h1>Blog A2A Protocol</h1>
+                    
+                    <p>Explore the latest insights, tutorials, and best practices in the A2A Protocol ecosystem. Stay updated with our technical articles and community updates.</p>
+                    
+                    <h2>Artigos Recentes</h2>
+                    
+                    <h3>August 7, 2025</h3>
+                    <h4>A2A Multi-Agent Example: Number Guessing Game</h4>
+                    <p>A2A protocol hands-on tutorial: Three lightweight agents collaborating to complete a number guessing game. Features evaluator, CLI frontend, and visualizer roles, demonstrating inter-agent communication, task management, and multi-turn dialogue mechanisms.</p>
+                    
+                    <h3>August 4, 2025</h3>
+                    <h4>A2A vs MCP Protocol Relationship: In-Depth Community Discussion Analysis</h4>
+                    <p>Comprehensive analysis of A2A vs MCP protocol relationship based on GitHub community discussions. Explores design philosophy differences, ecosystem maturity, and practical guidance for choosing between agent-to-agent communication vs tool standardization approaches.</p>
+                    
+                    <h3>July 31, 2025</h3>
+                    <h4>AgentMaster Multi-Agent Conversational Framework</h4>
+                    <p>AgentMaster is a next-generation multi-agent conversational framework jointly developed by Stanford University and George Mason University, pioneering the integration of A2A and MCP protocols in a single system.</p>
+                    
+                    <h2>Recursos</h2>
+                    <ul>
+                        <li><strong>Multimodal Support</strong>: Text, images, and audio</li>
+                        <li><strong>Task Decomposition</strong>: Automatic complex task breakdown</li>
+                        <li><strong>SQL Queries</strong>: Database integration</li>
+                        <li><strong>Information Retrieval</strong>: Advanced search capabilities</li>
+                        <li><strong>Image Analysis</strong>: Computer vision features</li>
+                    </ul>
+                    
+                    <h2>Tags Populares</h2>
+                    <p>
+                        <code>.NET</code> <code>ACP</code> <code>ADK</code> <code>AG2</code> 
+                        <code>CrewAI</code> <code>Inspector</code> <code>JSON</code> <code>Java</code> 
+                        <code>LangChain</code> <code>LangGraph</code> <code>LlamaIndex</code> 
+                        <code>MCP</code> <code>Ollama</code> <code>OpenRouter</code> 
+                        <code>Python</code> <code>TypeScript</code>
+                    </p>
+                    
+                    <h2>Links Úteis</h2>
+                    <ul>
+                        <li><a href="https://a2aprotocol.ai">Site Principal</a></li>
+                        <li><a href="https://a2aprotocol.ai/docs">Documentação</a></li>
+                        <li><a href="https://github.com/a2a-protocol">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(event) {
+            if (event) event.stopPropagation();
+            document.getElementById('modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('open');
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

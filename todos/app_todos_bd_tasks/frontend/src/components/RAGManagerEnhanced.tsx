@@ -5,14 +5,19 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
+import { DocumentDetailModal } from './DocumentDetailModal'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3344'
 
 export function RAGManagerEnhanced() {
   const [activeTab, setActiveTab] = useState<'documents' | 'search' | 'add'>('documents')
   const [selectedDoc, setSelectedDoc] = useState<string | null>(null)
+  const [selectedDocumentForModal, setSelectedDocumentForModal] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [urlsToAdd, setUrlsToAdd] = useState('')
   const [documentFilter, setDocumentFilter] = useState<'all' | 'webfetch' | 'playbooks'>('all')
+  const [mcpDocs, setMcpDocs] = useState<any[]>([])
+  const [importingMcp, setImportingMcp] = useState(false)
   
   // Hooks de dados
   const { data: documents = [], isLoading: loadingDocs, error: docsError } = useRAGDocuments(50)
@@ -63,6 +68,16 @@ export function RAGManagerEnhanced() {
   
   const handleRemoveDocument = async (docId: string) => {
     removeDoc.mutate(docId)
+  }
+
+  const handleViewDocument = (doc: any) => {
+    setSelectedDocumentForModal(doc)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedDocumentForModal(null)
   }
   
   const handleFilterClick = (filter: 'all' | 'webfetch' | 'playbooks') => {
@@ -118,6 +133,121 @@ export function RAGManagerEnhanced() {
     document.body.removeChild(link)
     
     toast.success('Cache exportado!')
+  }
+
+  // Função para buscar documentos do MCP RAG Server
+  const fetchMcpDocuments = async () => {
+    try {
+      setImportingMcp(true)
+      toast.loading('Buscando documentos do MCP RAG Server...', { id: 'fetch-mcp' })
+      
+      const response = await fetch('http://localhost:8765/frontend-documents.json')
+      if (!response.ok) {
+        throw new Error('Servidor MCP não está rodando. Execute: python3 simple-sync-server.py')
+      }
+      
+      const data = await response.json()
+      const docs = data.documents || []
+      
+      // Filtrar apenas documentos A2A
+      const a2aDocs = docs.filter((doc: any) => 
+        doc.category?.includes('a2a') || 
+        doc.tags?.includes('a2a') ||
+        doc.source?.includes('a2a')
+      )
+      
+      setMcpDocs(a2aDocs)
+      toast.success(`${a2aDocs.length} documentos A2A encontrados no MCP!`, { id: 'fetch-mcp' })
+      
+      if (a2aDocs.length > 0) {
+        // Importar automaticamente sem confirmação - atualizado!
+        await importMcpToIndexedDB(a2aDocs)
+      }
+      
+    } catch (error: any) {
+      toast.error(`Erro: ${error.message}`, { id: 'fetch-mcp' })
+      console.error(error)
+    } finally {
+      setImportingMcp(false)
+    }
+  }
+
+  // Função para importar documentos MCP para IndexedDB
+  const importMcpToIndexedDB = async (docsToImport: any[]) => {
+    try {
+      toast.loading('Importando para IndexedDB...', { id: 'import-mcp' })
+      
+      // Abrir/criar database
+      const dbRequest = indexedDB.open('rag-cache', 1)
+      
+      dbRequest.onerror = () => {
+        throw new Error('Erro ao abrir IndexedDB')
+      }
+      
+      dbRequest.onupgradeneeded = (event: any) => {
+        const db = event.target.result
+        
+        // Criar object store se não existir
+        if (!db.objectStoreNames.contains('documents')) {
+          const store = db.createObjectStore('documents', { keyPath: 'id' })
+          store.createIndex('url', 'url', { unique: false })
+          store.createIndex('category', 'category', { unique: false })
+          store.createIndex('timestamp', 'timestamp', { unique: false })
+        }
+      }
+      
+      dbRequest.onsuccess = (event: any) => {
+        const db = event.target.result
+        const transaction = db.transaction(['documents'], 'readwrite')
+        const store = transaction.objectStore('documents')
+        
+        // Limpar store antigo de documentos A2A
+        const clearRequest = store.clear()
+        
+        clearRequest.onsuccess = () => {
+          // Adicionar novos documentos
+          let imported = 0
+          docsToImport.forEach(doc => {
+            // Garantir que cada documento tem um ID único
+            if (!doc.id) {
+              doc.id = crypto.randomUUID()
+            }
+            
+            // Adicionar timestamp se não existir
+            if (!doc.timestamp) {
+              doc.timestamp = new Date().toISOString()
+            }
+            
+            // Adicionar ao store
+            const request = store.add(doc)
+            request.onsuccess = () => {
+              imported++
+            }
+          })
+          
+          transaction.oncomplete = () => {
+            toast.success(`✅ ${imported} documentos A2A importados!`, { id: 'import-mcp' })
+            
+            // Salvar no localStorage também
+            localStorage.setItem('rag-documents-a2a', JSON.stringify(docsToImport))
+            localStorage.setItem('rag-sync-timestamp', new Date().toISOString())
+            
+            // Recarregar página para mostrar novos documentos
+            setTimeout(() => {
+              window.location.reload()
+            }, 1500)
+          }
+        }
+        
+        transaction.onerror = () => {
+          throw new Error('Erro na transação IndexedDB')
+        }
+      }
+      
+    } catch (error: any) {
+      toast.error(`Erro na importação: ${error.message}`, { id: 'import-mcp' })
+      console.error(error)
+    }
   }
   
   // Não mostrar erro se for apenas um cache vazio
@@ -244,6 +374,14 @@ export function RAGManagerEnhanced() {
                 🔄 Sincronizar Playbooks
               </button>
             )}
+            
+            <button
+              onClick={fetchMcpDocuments}
+              disabled={importingMcp}
+              className="px-4 py-2 m-2 text-sm bg-purple-600 text-white hover:bg-purple-700 disabled:bg-gray-400 rounded-md transition-colors"
+            >
+              {importingMcp ? '⏳ Importando...' : '🔄 Importar do MCP'}
+            </button>
             
             <button
               onClick={exportCache}
@@ -389,19 +527,30 @@ export function RAGManagerEnhanced() {
                                             {doc.metadata.url}
                                           </a>
                                         )}
-                                        <p className="text-sm text-gray-600 mt-1">
+                                        <p 
+                                          className="text-sm text-gray-600 mt-1 hover:text-gray-800 transition-colors"
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            handleViewDocument(doc)
+                                          }}
+                                        >
                                           {doc.content.substring(0, 150)}...
                                         </p>
-                                        {selectedDoc === doc.id && (
-                                          <pre className="mt-3 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
-                                            {doc.content}
-                                          </pre>
-                                        )}
                                       </div>
                                       <div className="flex items-center gap-2 ml-4">
                                         <span className="text-xs text-gray-500">
                                           {format(new Date(doc.timestamp), 'dd/MM HH:mm')}
                                         </span>
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            handleViewDocument(doc)
+                                          }}
+                                          className="text-blue-500 hover:text-blue-700"
+                                          title="Ver detalhes"
+                                        >
+                                          👁️
+                                        </button>
                                         <button
                                           onClick={(e) => {
                                             e.stopPropagation()
@@ -433,19 +582,30 @@ export function RAGManagerEnhanced() {
                                     <h3 className="font-medium text-gray-900">
                                       {doc.source}
                                     </h3>
-                                    <p className="text-sm text-gray-600 mt-1">
+                                    <p 
+                                      className="text-sm text-gray-600 mt-1 hover:text-gray-800 transition-colors"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleViewDocument(doc)
+                                      }}
+                                    >
                                       {doc.content.substring(0, 150)}...
                                     </p>
-                                    {selectedDoc === doc.id && (
-                                      <pre className="mt-3 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
-                                        {doc.content}
-                                      </pre>
-                                    )}
                                   </div>
                                   <div className="flex items-center gap-2 ml-4">
                                     <span className="text-xs text-gray-500">
                                       {format(new Date(doc.timestamp), 'dd/MM HH:mm')}
                                     </span>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleViewDocument(doc)
+                                      }}
+                                      className="text-blue-500 hover:text-blue-700"
+                                      title="Ver detalhes"
+                                    >
+                                      👁️
+                                    </button>
                                     <button
                                       onClick={(e) => {
                                         e.stopPropagation()
@@ -478,19 +638,30 @@ export function RAGManagerEnhanced() {
                               <h3 className="font-medium text-gray-900">
                                 {doc.source}
                               </h3>
-                              <p className="text-sm text-gray-600 mt-1">
+                              <p 
+                                className="text-sm text-gray-600 mt-1 hover:text-gray-800 transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleViewDocument(doc)
+                                }}
+                              >
                                 {doc.content.substring(0, 150)}...
                               </p>
-                              {selectedDoc === doc.id && (
-                                <pre className="mt-3 p-3 bg-gray-100 rounded text-xs overflow-x-auto">
-                                  {doc.content}
-                                </pre>
-                              )}
                             </div>
                             <div className="flex items-center gap-2 ml-4">
                               <span className="text-xs text-gray-500">
                                 {format(new Date(doc.timestamp), 'dd/MM HH:mm')}
                               </span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleViewDocument(doc)
+                                }}
+                                className="text-blue-500 hover:text-blue-700"
+                                title="Ver detalhes"
+                              >
+                                👁️
+                              </button>
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation()
@@ -594,6 +765,13 @@ export function RAGManagerEnhanced() {
           )}
         </div>
       </div>
+      
+      {/* Modal de Detalhes do Documento */}
+      <DocumentDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        document={selectedDocumentForModal}
+      />
     </div>
   )
 }

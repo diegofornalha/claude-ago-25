@@ -8,6 +8,21 @@ export default defineConfig({
     tailwindcss()
   ],
   
+  server: {
+    proxy: {
+      '/api/rag': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/rag/, '')
+      },
+      '/mcp-rag-cache': {
+        target: 'http://localhost:8765',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/mcp-rag-cache/, '')
+      }
+    }
+  },
+  
   build: {
     target: 'esnext',
     minify: 'terser',

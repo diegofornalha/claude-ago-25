@@ -1,0 +1,470 @@
+# Script de Indexação A2A - Execute no Claude Code
+# Copie e cole os comandos abaixo para indexar cada URL
+
+
+# Indexar: ADK A2A Guide
+mcp__rag-server__add(
+    title="ADK A2A Guide",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/adk-a2a-guide"
+)
+
+
+# Indexar: A2A .NET SDK
+mcp__rag-server__add(
+    title="A2A .NET SDK",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog", "sdk"],
+    url="https://a2aprotocol.ai/blog/a2a-dotnet-sdk"
+)
+
+
+# Indexar: A2A JavaScript SDK
+mcp__rag-server__add(
+    title="A2A JavaScript SDK",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog", "sdk", "javascript"],
+    url="https://a2aprotocol.ai/blog/a2a-javascript-sdk"
+)
+
+
+# Indexar: A2A Java Sample
+mcp__rag-server__add(
+    title="A2A Java Sample",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog", "example"],
+    url="https://a2aprotocol.ai/blog/a2a-java-sample"
+)
+
+
+# Indexar: A2A Python SDK
+mcp__rag-server__add(
+    title="A2A Python SDK",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog", "sdk", "python"],
+    url="https://a2aprotocol.ai/blog/a2a-sdk-python"
+)
+
+
+# Indexar: A2A TypeScript Guide
+mcp__rag-server__add(
+    title="A2A TypeScript Guide",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:sdk",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-typescript-guide"
+)
+
+
+# Indexar: Expense Reimbursement Demo
+mcp__rag-server__add(
+    title="Expense Reimbursement Demo",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-adk-expense-reimbursement"
+)
+
+
+# Indexar: JavaScript Movie Agent
+mcp__rag-server__add(
+    title="JavaScript Movie Agent",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-js-movie-agent"
+)
+
+
+# Indexar: Python GitHub Agent
+mcp__rag-server__add(
+    title="Python GitHub Agent",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog", "python"],
+    url="https://a2aprotocol.ai/blog/a2a-python-github-agent"
+)
+
+
+# Indexar: Travel Planner with OpenRouter
+mcp__rag-server__add(
+    title="Travel Planner with OpenRouter",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-travel-planner-openrouter"
+)
+
+
+# Indexar: Hello World Samples
+mcp__rag-server__add(
+    title="Hello World Samples",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog", "example"],
+    url="https://a2aprotocol.ai/blog/a2a-samples-hello-world"
+)
+
+
+# Indexar: Currency Agent Tutorial
+mcp__rag-server__add(
+    title="Currency Agent Tutorial",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:examples",
+    tags=["a2a", "blog", "sdk", "tutorial"],
+    url="https://a2aprotocol.ai/blog/a2a-sdk-currency-agent-tutorial"
+)
+
+
+# Indexar: Python A2A Tutorial
+mcp__rag-server__add(
+    title="Python A2A Tutorial",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tutorials",
+    tags=["a2a", "blog", "python", "tutorial"],
+    url="https://a2aprotocol.ai/blog/python-a2a-tutorial"
+)
+
+
+# Indexar: Python A2A Tutorial 2025
+mcp__rag-server__add(
+    title="Python A2A Tutorial 2025",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tutorials",
+    tags=["a2a", "blog", "python", "tutorial"],
+    url="https://a2aprotocol.ai/blog/python-a2a-tutorial-20250513"
+)
+
+
+# Indexar: Python Tutorial with Code
+mcp__rag-server__add(
+    title="Python Tutorial with Code",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tutorials",
+    tags=["a2a", "blog", "python", "tutorial"],
+    url="https://a2aprotocol.ai/blog/python-a2a-tutorial-with-source-code"
+)
+
+
+# Indexar: Google A2A Python SDK Tutorial
+mcp__rag-server__add(
+    title="Google A2A Python SDK Tutorial",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tutorials",
+    tags=["a2a", "blog", "sdk", "python", "tutorial"],
+    url="https://a2aprotocol.ai/blog/google-a2a-python-sdk-tutorial"
+)
+
+
+# Indexar: LangGraph Tutorial 2025
+mcp__rag-server__add(
+    title="LangGraph Tutorial 2025",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tutorials",
+    tags=["a2a", "blog", "tutorial"],
+    url="https://a2aprotocol.ai/blog/a2a-langraph-tutorial-20250513"
+)
+
+
+# Indexar: A2A MCP Integration
+mcp__rag-server__add(
+    title="A2A MCP Integration",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:integration",
+    tags=["a2a", "blog", "mcp", "integration"],
+    url="https://a2aprotocol.ai/blog/a2a-mcp-integration"
+)
+
+
+# Indexar: MCP AG2 Sample
+mcp__rag-server__add(
+    title="MCP AG2 Sample",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:integration",
+    tags=["a2a", "blog", "mcp", "integration", "example"],
+    url="https://a2aprotocol.ai/blog/a2a-mcp-ag2-sample"
+)
+
+
+# Indexar: MCP AG UI
+mcp__rag-server__add(
+    title="MCP AG UI",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:integration",
+    tags=["a2a", "blog", "mcp", "integration"],
+    url="https://a2aprotocol.ai/blog/a2a-mcp-ag-ui"
+)
+
+
+# Indexar: CrewAI Analysis Chart Agent
+mcp__rag-server__add(
+    title="CrewAI Analysis Chart Agent",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:integration",
+    tags=["a2a", "blog", "integration"],
+    url="https://a2aprotocol.ai/blog/a2a-crewai-analysis-chart-agent"
+)
+
+
+# Indexar: LlamaIndex File Chat
+mcp__rag-server__add(
+    title="LlamaIndex File Chat",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:integration",
+    tags=["a2a", "blog", "integration", "example"],
+    url="https://a2aprotocol.ai/blog/a2a-samples-llama-index-file-chat-openrouter"
+)
+
+
+# Indexar: A2A vs MCP Comparison
+mcp__rag-server__add(
+    title="A2A vs MCP Comparison",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:analysis",
+    tags=["a2a", "blog", "mcp"],
+    url="https://a2aprotocol.ai/blog/a2a-vs-mcp"
+)
+
+
+# Indexar: AI Protocols Analysis
+mcp__rag-server__add(
+    title="AI Protocols Analysis",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:analysis",
+    tags=["a2a", "blog", "mcp"],
+    url="https://a2aprotocol.ai/blog/ai-protocols-analysis-report-a2a-mcp-and-acp"
+)
+
+
+# Indexar: Linux Foundation Impact
+mcp__rag-server__add(
+    title="Linux Foundation Impact",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:analysis",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/impact-analysis-google-donating-a2a-protocol-linux-foundation"
+)
+
+
+# Indexar: Agent2Agent Protocol Win
+mcp__rag-server__add(
+    title="Agent2Agent Protocol Win",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:analysis",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/agent2agent-protocol-win"
+)
+
+
+# Indexar: A2A MCP Protocol Winner
+mcp__rag-server__add(
+    title="A2A MCP Protocol Winner",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:analysis",
+    tags=["a2a", "blog", "mcp"],
+    url="https://a2aprotocol.ai/blog/a2a-mcp-ai-protocol-winner"
+)
+
+
+# Indexar: A2A Inspector
+mcp__rag-server__add(
+    title="A2A Inspector",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tools",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-inspector"
+)
+
+
+# Indexar: Protocol Validator Guide
+mcp__rag-server__add(
+    title="Protocol Validator Guide",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tools",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/how-to-use-a2a-protocol-validator"
+)
+
+
+# Indexar: OpenAI Codex CLI
+mcp__rag-server__add(
+    title="OpenAI Codex CLI",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:tools",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/openai-codex-cli"
+)
+
+
+# Indexar: Understanding A2A Protocol
+mcp__rag-server__add(
+    title="Understanding A2A Protocol",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:docs",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/understanding-a2a-protocol"
+)
+
+
+# Indexar: A2A Implementations
+mcp__rag-server__add(
+    title="A2A Implementations",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:docs",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-implementations"
+)
+
+
+# Indexar: Awesome A2A Resources
+mcp__rag-server__add(
+    title="Awesome A2A Resources",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:docs",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/awesome-a2a"
+)
+
+
+# Indexar: Sample Methods and JSON
+mcp__rag-server__add(
+    title="Sample Methods and JSON",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:docs",
+    tags=["a2a", "blog", "javascript", "example"],
+    url="https://a2aprotocol.ai/blog/a2a-sample-methods-and-json-responses"
+)
+
+
+# Indexar: Python A2A
+mcp__rag-server__add(
+    title="Python A2A",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:docs",
+    tags=["a2a", "blog", "python"],
+    url="https://a2aprotocol.ai/blog/python-a2a"
+)
+
+
+# Indexar: A2A ACP
+mcp__rag-server__add(
+    title="A2A ACP",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:special",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/a2a-acp"
+)
+
+
+# Indexar: Geo SEO A2A
+mcp__rag-server__add(
+    title="Geo SEO A2A",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:special",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/geo-seo-a2a"
+)
+
+
+# Indexar: AlphaEvolve vs Codex
+mcp__rag-server__add(
+    title="AlphaEvolve vs Codex",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:special",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/alphaevolve-vs-codex-agent"
+)
+
+
+# Indexar: AlphaEvolve with A2A
+mcp__rag-server__add(
+    title="AlphaEvolve with A2A",
+    content="[Buscar conteúdo via WebFetch]",
+    type="blog",
+    source="a2aprotocol.ai/blog",
+    category="a2a:special",
+    tags=["a2a", "blog"],
+    url="https://a2aprotocol.ai/blog/alphaenvolve-with-a2a"
+)

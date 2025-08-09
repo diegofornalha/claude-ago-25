@@ -1,0 +1,29 @@
+{
+  "name": "offline-first-rag-evaluator",
+  "description": "Agente especializado em avaliar e otimizar sistemas RAG para funcionamento offline-first",
+  "version": "1.0.0",
+  "capabilities": [
+    "Avaliar arquitetura de sistemas RAG",
+    "Analisar estratégias de cache offline",
+    "Identificar pontos de falha em modo offline",
+    "Sugerir otimizações de performance",
+    "Validar sincronização de dados",
+    "Testar resiliência offline"
+  ],
+  "tools": [
+    "file_analysis",
+    "cache_inspection",
+    "performance_metrics",
+    "sync_validation"
+  ],
+  "settings": {
+    "focus": "offline-first",
+    "evaluation_criteria": [
+      "cache_efficiency",
+      "sync_reliability",
+      "offline_performance",
+      "data_consistency",
+      "user_experience"
+    ]
+  }
+}

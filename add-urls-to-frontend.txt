@@ -1,0 +1,52 @@
+# URLs A2A para Adicionar no Frontend
+
+## Instruções:
+1. Abra o frontend em http://localhost:5173/rag
+2. Clique no botão "➕ Adicionar URLs"
+3. Copie e cole os URLs abaixo (um por linha)
+4. Clique em "Adicionar"
+
+## URLs dos Documentos A2A:
+
+https://a2aprotocol.ai/blog/adk-a2a-guide
+https://a2aprotocol.ai/blog/a2a-dotnet-sdk
+https://a2aprotocol.ai/blog/a2a-javascript-sdk
+https://a2aprotocol.ai/blog/a2a-java-sample
+https://a2aprotocol.ai/blog/a2a-sdk-python
+https://a2aprotocol.ai/blog/a2a-typescript-guide
+https://a2aprotocol.ai/blog/a2a-vs-mcp
+https://a2aprotocol.ai/blog/understanding-a2a-protocol
+https://a2aprotocol.ai/blog/a2a-implementations
+https://a2aprotocol.ai/blog/awesome-a2a
+https://a2aprotocol.ai/blog/a2a-inspector
+https://a2aprotocol.ai/blog/a2a-mcp-integration
+https://a2aprotocol.ai/blog/a2a-crewai-analysis-chart-agent
+https://a2aprotocol.ai/blog/a2a-langraph-tutorial-20250513
+https://a2aprotocol.ai/blog/python-a2a-tutorial
+https://a2aprotocol.ai/blog/a2a-samples-hello-world
+https://a2aprotocol.ai/blog/a2a-number-guessing-game
+https://a2aprotocol.ai/blog/a2a-adk-expense-reimbursement
+https://a2aprotocol.ai/blog/a2a-js-movie-agent
+https://a2aprotocol.ai/blog/a2a-python-github-agent
+https://a2aprotocol.ai/blog/a2a-travel-planner-openrouter
+https://a2aprotocol.ai/blog/a2a-sdk-currency-agent-tutorial
+https://a2aprotocol.ai/blog/google-a2a-python-sdk-tutorial
+https://a2aprotocol.ai/blog/python-a2a-tutorial-20250513
+https://a2aprotocol.ai/blog/python-a2a-tutorial-with-source-code
+https://a2aprotocol.ai/blog/a2a-mcp-ag2-sample
+https://a2aprotocol.ai/blog/a2a-mcp-ag-ui
+https://a2aprotocol.ai/blog/a2a-samples-llama-index-file-chat-openrouter
+https://a2aprotocol.ai/blog/ai-protocols-analysis-report-a2a-mcp-and-acp
+https://a2aprotocol.ai/blog/impact-analysis-google-donating-a2a-protocol-linux-foundation
+https://a2aprotocol.ai/blog/agent2agent-protocol-win
+https://a2aprotocol.ai/blog/a2a-mcp-ai-protocol-winner
+https://a2aprotocol.ai/blog/how-to-use-a2a-protocol-validator
+https://a2aprotocol.ai/blog/openai-codex-cli
+https://a2aprotocol.ai/blog/a2a-sample-methods-and-json-responses
+https://a2aprotocol.ai/blog/python-a2a
+https://a2aprotocol.ai/blog/a2a-acp
+https://a2aprotocol.ai/blog/geo-seo-a2a
+https://a2aprotocol.ai/blog/alphaevolve-vs-codex-agent
+https://a2aprotocol.ai/blog/alphaenvolve-with-a2a
+
+## Total: 40 URLs do Blog A2A Protocol
