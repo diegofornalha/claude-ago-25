@@ -1,0 +1,42 @@
+[
+  {
+    "content": "Documentar o comportamento de criação automática de arquivo de todos por sessão",
+    "status": "completed",
+    "id": "0"
+  },
+  {
+    "content": "Criar arquivo 1-visao-geral.md com introdução ao A2A",
+    "status": "pending",
+    "id": "1"
+  },
+  {
+    "content": "Criar arquivo 2-conceitos-principais.md com conceitos fundamentais",
+    "status": "pending",
+    "id": "2"
+  },
+  {
+    "content": "Criar arquivo 3-exemplos-praticos.md com casos de uso",
+    "status": "pending",
+    "id": "3"
+  },
+  {
+    "content": "Criar arquivo 4-componentes-tecnicos.md com arquitetura",
+    "status": "pending",
+    "id": "4"
+  },
+  {
+    "content": "Criar arquivo 5-integracao-mcp.md sobre MCP e A2A",
+    "status": "pending",
+    "id": "5"
+  },
+  {
+    "content": "Criar arquivo 6-casos-uso-futuros.md com visão de futuro",
+    "status": "pending",
+    "id": "6"
+  },
+  {
+    "content": "Criar arquivo README.md com índice e material de apoio",
+    "status": "pending",
+    "id": "7"
+  }
+]
