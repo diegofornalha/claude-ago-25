@@ -2,7 +2,7 @@
 name = "helloworld"
 version = "0.2.0"
 description = "HelloWorld agent completo - migração de hello_world + funcionalidades avançadas"
-readme = "README.md"
+# readme = "docs/README.md"  # Disabled for build simplicity
 requires-python = ">=3.10"
 dependencies = [
     "a2a-sdk[sqlite]>=0.2.6",

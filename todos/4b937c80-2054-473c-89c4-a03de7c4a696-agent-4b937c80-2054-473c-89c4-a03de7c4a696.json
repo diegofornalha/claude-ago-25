@@ -1,0 +1,42 @@
+[
+  {
+    "content": "✅ Verificar status do servidor Graphiti-Turso",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "✅ Testar adição de episódios (com erro mas funciona)",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "✅ Testar busca de conhecimento",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "✅ Verificar sincronização com Turso",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "✅ Testar listagem de webhooks",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "✅ Verificar status completo do sistema",
+    "status": "completed",
+    "id": "6"
+  },
+  {
+    "content": "✅ Testar busca no Turso cloud",
+    "status": "completed",
+    "id": "7"
+  },
+  {
+    "content": "✅ Validar persistência híbrida",
+    "status": "completed",
+    "id": "8"
+  }
+]

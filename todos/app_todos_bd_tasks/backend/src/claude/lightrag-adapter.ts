@@ -9,7 +9,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 // Configuração
-const LIGHTRAG_URL = process.env.LIGHTRAG_URL || 'http://localhost:8020'
+const LIGHTRAG_URL = process.env.LIGHTRAG_URL || 'http://localhost:9999'
 const LIGHTRAG_TIMEOUT = 30000 // 30 segundos
 
 // Schemas

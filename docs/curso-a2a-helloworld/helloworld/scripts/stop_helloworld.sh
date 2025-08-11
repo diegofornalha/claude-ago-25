@@ -97,8 +97,8 @@ fi
 echo ""
 echo -e "${BLUE}🧹 Cleanup Options${NC}"
 echo "==================="
-read -p "Do you want to clean up log files? (y/N): " -n 1 -r
-echo
+# Auto-cleanup logs (no confirmation)
+REPLY="y"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     if [ -f "$LOG_FILE" ]; then
         # Create backup

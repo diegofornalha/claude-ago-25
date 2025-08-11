@@ -2,7 +2,7 @@
   "name": "helloworld",
   "version": "1.0.0",
   "description": "A simple A2A (Agent-to-Agent) protocol implementation for testing and demonstration purposes.",
-  "main": "a2a-server.js",
+  "main": "src/server-stable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

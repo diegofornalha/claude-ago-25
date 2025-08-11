@@ -1,0 +1,27 @@
+[
+  {
+    "content": "✅ Identificar causa do erro 'bool' object is not callable",
+    "status": "completed",
+    "id": "bug-1"
+  },
+  {
+    "content": "✅ Localizar função add_episode problemática",
+    "status": "completed",
+    "id": "bug-2"
+  },
+  {
+    "content": "✅ Corrigir conflito de nomes sync_to_turso",
+    "status": "completed",
+    "id": "bug-3"
+  },
+  {
+    "content": "✅ Aplicar correção no código",
+    "status": "completed",
+    "id": "bug-4"
+  },
+  {
+    "content": "Reiniciar servidor para aplicar correções",
+    "status": "pending",
+    "id": "bug-5"
+  }
+]

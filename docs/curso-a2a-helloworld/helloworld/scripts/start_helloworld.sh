@@ -1,6 +1,6 @@
 #!/bin/bash
-# HelloWorld A2A Agent Startup Script
-# Starts HelloWorld agent on port 9999 using log e pid directory
+# HelloWorld A2A Agent Startup Script  
+# Starts HelloWorld agent using A2A Protocol standard
 
 echo "🚀 Starting HelloWorld A2A Agent..."
 echo "===================================="
@@ -12,16 +12,16 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Get script directory
+# Get script directory and navigate to project root
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$SCRIPT_DIR"
+cd "$SCRIPT_DIR/.."
 
 # Set log and pid directory
-LOG_DIR="$SCRIPT_DIR/log e pid"
+LOG_DIR="$SCRIPT_DIR/../logs"
 mkdir -p "$LOG_DIR"
 
-# Set port
-PORT=9999
+# Set port (A2A default is dynamic, check server.py for actual port)
+PORT=9999  # Actual port used by A2A server
 NAME="HelloWorld"
 PID_FILE="$LOG_DIR/${NAME}.pid"
 LOG_FILE="$LOG_DIR/${NAME}.log"
@@ -61,13 +61,16 @@ fi
 # Start the server
 echo -e "${BLUE}🤖 Starting HelloWorld Agent on port $PORT...${NC}"
 
+# Export port environment variable
+export PORT=$PORT
+
 # Use uv if available, otherwise use python directly
 if command -v uv &> /dev/null && [ -f "pyproject.toml" ]; then
     echo -e "${YELLOW}📝 Using uv to run server${NC}"
-    nohup uv run python server.py > "$LOG_FILE" 2>&1 &
+    nohup uv run python src/server.py > "$LOG_FILE" 2>&1 &
 else
     echo -e "${YELLOW}📝 Using python directly${NC}"
-    nohup python server.py > "$LOG_FILE" 2>&1 &
+    nohup python src/server.py > "$LOG_FILE" 2>&1 &
 fi
 
 PID=$!
@@ -95,7 +98,7 @@ if ps -p $PID > /dev/null 2>&1; then
         echo ""
         echo -e "${BLUE}📋 Management:${NC}"
         echo -e "   • View logs: tail -f \"$LOG_FILE\""
-        echo -e "   • Stop agent: ./stop_helloworld.sh"
+        echo -e "   • Stop agent: ./scripts/stop_helloworld.sh"
         echo -e "   • Check status: curl http://localhost:$PORT/.well-known/agent.json"
         echo ""
         echo -e "${GREEN}🎯 HelloWorld Agent is ready!${NC}"
