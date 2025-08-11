@@ -1,0 +1,42 @@
+[
+  {
+    "content": "Analisar diretório mcp-turso",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Verificar estrutura atual do Turso MCP",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Criar sistema de embeddings com Turso",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Implementar tabelas para vetores no Turso",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Criar adaptador de embeddings Turso-Claude",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "Integrar embeddings Turso com Graphiti",
+    "status": "completed",
+    "id": "6"
+  },
+  {
+    "content": "Implementar busca vetorial no Turso",
+    "status": "completed",
+    "id": "7"
+  },
+  {
+    "content": "Testar solução completa",
+    "status": "completed",
+    "id": "8"
+  }
+]

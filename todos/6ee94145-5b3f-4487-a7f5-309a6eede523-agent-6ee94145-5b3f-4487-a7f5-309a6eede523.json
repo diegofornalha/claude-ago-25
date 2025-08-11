@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Demonstrar busca de documentos no RAG Server",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Mostrar listagem de documentos disponíveis",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Exemplificar busca por categoria",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Testar adição de novo documento",
+    "status": "completed",
+    "id": "4"
+  }
+]

@@ -1,4 +1,5 @@
-responda sempre em pt br 
+responda sempre em pt br
+pr oibido criar algo na raiz dessa sendo pasta ou arquivo sem autolização expressa do usuario, quando for criar algum arquivo se certificar de estar criando em sua devida pasta
 
 ## 🔒 SISTEMA DE COORDENAÇÃO DE TODOS - REGRAS DEFINITIVAS
 

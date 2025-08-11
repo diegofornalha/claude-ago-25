@@ -58,3 +58,5 @@ shell-snapshots/
 local/
 ide/
 
+
+/getzep_server/*

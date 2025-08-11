@@ -36,12 +36,17 @@
   },
   {
     "content": "Testar funcionamento completo do crewai-mkt",
-    "status": "pending",
+    "status": "completed",
     "id": "8"
   },
   {
     "content": "Documentar configuração e uso do crewai-mkt",
     "status": "completed",
     "id": "9"
+  },
+  {
+    "content": "Corrigir AgentCard no server.py do CrewAI",
+    "status": "completed",
+    "id": "10"
   }
 ]

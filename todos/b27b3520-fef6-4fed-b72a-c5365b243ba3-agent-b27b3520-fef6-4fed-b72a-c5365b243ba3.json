@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Verificar capacidades de embedding do Claude Code",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Criar script de teste de embeddings locais",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Configurar Zep para usar embeddings do Claude",
+    "status": "completed",
+    "id": "3"
+  }
+]
