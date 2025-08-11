@@ -1,0 +1,23 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "task_id": "task-123-abc",
+    "status": "completed",
+    "message": {
+      "role": "agent",
+      "parts": [
+        {
+          "type": "text",
+          "content": "Olá Maria! 👋 Seja muito bem-vinda ao mundo do A2A Protocol! É um prazer conhecê-la. Estou aqui para ajudar no que precisar!"
+        }
+      ],
+      "timestamp": "2025-01-11T10:00:01Z"
+    },
+    "metadata": {
+      "processing_time": "0.5s",
+      "confidence": 1.0,
+      "language_detected": "pt-BR"
+    }
+  },
+  "id": "req-002"
+}

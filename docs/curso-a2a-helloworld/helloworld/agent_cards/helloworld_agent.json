@@ -1,0 +1,29 @@
+
+{
+    "name": "Hello World Agent",
+    "description": "Intelligent hello world agent that provides contextual responses",
+    "url": "http://localhost:9999/",
+    "version": "1.0.0",
+    "defaultInputModes": ["text"],
+    "defaultOutputModes": ["text"],
+    "capabilities": {
+        "streaming": true
+    },
+    "skills": [
+        {
+            "id": "hello_world",
+            "name": "Intelligent Hello World",
+            "description": "Provides contextual hello world responses based on user input. Detects intent and responds accordingly with basic, standard, or super greetings.",
+            "tags": ["hello world", "greeting", "intelligent", "contextual"],
+            "examples": [
+                "hi", 
+                "hello world", 
+                "super hello", 
+                "amazing hello", 
+                "simple hello",
+                "basic greeting",
+                "awesome hello"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "method": "create_task",
+  "params": {
+    "skill": "greet",
+    "parameters": {
+      "language": "pt-BR",
+      "style": "friendly"
+    }
+  },
+  "id": "req-001"
+}

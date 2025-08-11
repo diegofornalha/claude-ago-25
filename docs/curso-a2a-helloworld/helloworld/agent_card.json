@@ -1,0 +1,26 @@
+{
+  "name": "AgenteSaudacao",
+  "version": "1.0.0",
+  "description": "Agente simples que cumprimenta pessoas",
+  "skills": [
+    "greet",
+    "welcome"
+  ],
+  "endpoints": {
+    "agent_card": "/.well-known/agent-card",
+    "tasks": "/api/v1/tasks",
+    "messages": "/api/v1/tasks/{task_id}/messages"
+  },
+  "capabilities": {
+    "languages": ["pt-BR", "en", "es"],
+    "max_concurrent_tasks": 5,
+    "streaming_support": false,
+    "response_time": "< 1 segundo"
+  },
+  "metadata": {
+    "author": "Turma A2A",
+    "created": "2025-01-11",
+    "category": "social",
+    "tags": ["greeting", "welcome", "beginner-friendly"]
+  }
+}

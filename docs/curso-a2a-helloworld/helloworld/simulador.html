@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador A2A - Hello World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .step-box {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .step-box.active {
+            border-color: #667eea;
+            background: #f3f0ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .step-title {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .step-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .json-display {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .json-display.show {
+            display: block;
+        }
+        
+        .communication-log {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .log-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .log-entry {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .log-time {
+            color: #999;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        
+        .log-message {
+            color: #333;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #cbd5e0;
+            margin: 20px 0;
+        }
+        
+        .final-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .final-result.show {
+            display: block;
+        }
+        
+        .result-message {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .reset-button {
+            background: white;
+            color: #667eea;
+            margin-top: 20px;
+        }
+        
+        .reset-button:hover {
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Simulador A2A Protocol</h1>
+        <p class="subtitle">Veja o protocolo em ação - passo a passo!</p>
+        
+        <div class="flow-container">
+            <!-- Passo 1: Descoberta -->
+            <div class="step-box" id="step1">
+                <span class="step-number">1</span>
+                <h3 class="step-title">📋 Descoberta</h3>
+                <p class="step-description">
+                    O cliente descobre o agente e pede seu "cartão de visita" (Agent Card)
+                </p>
+                <button onclick="executeStep1()">Descobrir Agente</button>
+                <div class="json-display" id="json1"></div>
+            </div>
+            
+            <!-- Passo 2: Criar Tarefa -->
+            <div class="step-box" id="step2">
+                <span class="step-number">2</span>
+                <h3 class="step-title">📝 Criar Tarefa</h3>
+                <p class="step-description">
+                    Cliente pede ao agente para criar uma tarefa de saudação
+                </p>
+                <button id="btn2" onclick="executeStep2()" disabled>Criar Tarefa</button>
+                <div class="json-display" id="json2"></div>
+            </div>
+            
+            <!-- Passo 3: Enviar Mensagem -->
+            <div class="step-box" id="step3">
+                <span class="step-number">3</span>
+                <h3 class="step-title">💬 Enviar Nome</h3>
+                <p class="step-description">
+                    Cliente envia seu nome para personalizar a saudação
+                </p>
+                <button id="btn3" onclick="executeStep3()" disabled>Enviar Mensagem</button>
+                <div class="json-display" id="json3"></div>
+            </div>
+            
+            <!-- Passo 4: Receber Resposta -->
+            <div class="step-box" id="step4">
+                <span class="step-number">4</span>
+                <h3 class="step-title">✅ Resposta</h3>
+                <p class="step-description">
+                    Agente responde com saudação personalizada
+                </p>
+                <button id="btn4" onclick="executeStep4()" disabled>Ver Resposta</button>
+                <div class="json-display" id="json4"></div>
+            </div>
+        </div>
+        
+        <!-- Log de Comunicação -->
+        <div class="communication-log">
+            <h3 class="log-title">📡 Monitor de Comunicação</h3>
+            <div id="log-container">
+                <div class="log-entry">
+                    <span class="log-time">--:--:--</span>
+                    <span class="log-message">Sistema iniciado. Pronto para descobrir agente...</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Resultado Final -->
+        <div class="final-result" id="final-result">
+            <div class="result-message">
+                🎉 Parabéns! Você completou seu primeiro Hello World A2A!
+            </div>
+            <p>O agente respondeu: <strong id="final-greeting"></strong></p>
+            <button class="reset-button" onclick="resetSimulator()">Tentar Novamente</button>
+        </div>
+    </div>
+    
+    <script>
+        // Dados do Agent Card
+        const agentCard = {
+            name: "AgenteSaudacao",
+            version: "1.0.0",
+            description: "Agente simples que cumprimenta pessoas",
+            skills: ["greet", "welcome"],
+            endpoints: {
+                agent_card: "/.well-known/agent-card",
+                tasks: "/api/v1/tasks",
+                messages: "/api/v1/tasks/{task_id}/messages"
+            }
+        };
+        
+        // Dados da criação de tarefa
+        const createTask = {
+            jsonrpc: "2.0",
+            method: "create_task",
+            params: {
+                skill: "greet",
+                parameters: {
+                    language: "pt-BR",
+                    style: "friendly"
+                }
+            },
+            id: "req-001"
+        };
+        
+        // Dados da mensagem
+        const sendMessage = {
+            jsonrpc: "2.0",
+            method: "send_message",
+            params: {
+                task_id: "task-123-abc",
+                message: {
+                    role: "user",
+                    parts: [{
+                        type: "text",
+                        content: "Meu nome é Maria"
+                    }]
+                }
+            },
+            id: "req-002"
+        };
+        
+        // Resposta do agente
+        const agentResponse = {
+            jsonrpc: "2.0",
+            result: {
+                task_id: "task-123-abc",
+                status: "completed",
+                message: {
+                    role: "agent",
+                    parts: [{
+                        type: "text",
+                        content: "Olá Maria! 👋 Seja muito bem-vinda ao mundo do A2A Protocol!"
+                    }]
+                }
+            },
+            id: "req-002"
+        };
+        
+        function addLog(message) {
+            const time = new Date().toLocaleTimeString('pt-BR');
+            const logContainer = document.getElementById('log-container');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `
+                <span class="log-time">${time}</span>
+                <span class="log-message">${message}</span>
+            `;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        function executeStep1() {
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('json1').textContent = JSON.stringify(agentCard, null, 2);
+            document.getElementById('json1').classList.add('show');
+            document.getElementById('btn2').disabled = false;
+            addLog('🔍 Cliente: "Quem é você?" → GET /.well-known/agent-card');
+            addLog('✅ Agente: "Sou AgenteSaudacao, sei cumprimentar em 3 idiomas!"');
+        }
+        
+        function executeStep2() {
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('json2').textContent = JSON.stringify(createTask, null, 2);
+            document.getElementById('json2').classList.add('show');
+            document.getElementById('btn3').disabled = false;
+            addLog('📝 Cliente: "Crie uma tarefa de saudação" → POST /api/v1/tasks');
+            addLog('✅ Agente: "Tarefa criada! ID: task-123-abc"');
+        }
+        
+        function executeStep3() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+            document.getElementById('json3').textContent = JSON.stringify(sendMessage, null, 2);
+            document.getElementById('json3').classList.add('show');
+            document.getElementById('btn4').disabled = false;
+            
+            // Perguntar o nome do usuário
+            const userName = prompt('Qual é o seu nome?') || 'Maria';
+            sendMessage.params.message.parts[0].content = `Meu nome é ${userName}`;
+            agentResponse.result.message.parts[0].content = `Olá ${userName}! 👋 Seja muito bem-vindo(a) ao mundo do A2A Protocol!`;
+            
+            document.getElementById('json3').textContent = JSON.stringify(sendMessage, null, 2);
+            addLog(`💬 Cliente: "Meu nome é ${userName}" → POST /api/v1/tasks/task-123-abc/messages`);
+            addLog('⏳ Agente processando mensagem...');
+        }
+        
+        function executeStep4() {
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step4').classList.add('active');
+            document.getElementById('json4').textContent = JSON.stringify(agentResponse, null, 2);
+            document.getElementById('json4').classList.add('show');
+            
+            const greeting = agentResponse.result.message.parts[0].content;
+            document.getElementById('final-greeting').textContent = greeting;
+            
+            addLog(`🎉 Agente: "${greeting}"`);
+            addLog('✅ Tarefa concluída com sucesso!');
+            
+            setTimeout(() => {
+                document.getElementById('final-result').classList.add('show');
+            }, 1000);
+        }
+        
+        function resetSimulator() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

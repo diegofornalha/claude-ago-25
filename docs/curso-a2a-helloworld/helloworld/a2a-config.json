@@ -1,0 +1,34 @@
+{
+  "a2a_configuration": {
+    "enabled": true,
+    "agent_name": "helloworld_agent",
+    "project_name": "helloworld",
+    "protocol_version": "1.0",
+    "discovery": {
+      "auto_register": true,
+      "registry_url": "http://localhost:8888/api/agents",
+      "heartbeat_interval": 30000
+    },
+    "communication": {
+      "transport": "http",
+      "format": "json",
+      "compression": false,
+      "timeout": 30000
+    },
+    "cooperation": {
+      "task_delegation": true,
+      "result_sharing": true,
+      "skill_advertisement": true
+    },
+    "security": {
+      "authentication": false,
+      "encryption": false,
+      "rate_limiting": true
+    },
+    "monitoring": {
+      "metrics": true,
+      "logging": true,
+      "health_checks": true
+    }
+  }
+}

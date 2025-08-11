@@ -1,0 +1,37 @@
+[
+  {
+    "content": "Verificar arquivos no diretório graphiti-turso",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Analisar a configuração existente do graphiti-turso",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Corrigir o script de inicialização",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Atualizar a configuração do MCP",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Testar a conexão do graphiti-turso",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "Corrigir conexão do servidor turso",
+    "status": "completed",
+    "id": "6"
+  },
+  {
+    "content": "Criar documentação final com configurações corretas",
+    "status": "completed",
+    "id": "7"
+  }
+]
