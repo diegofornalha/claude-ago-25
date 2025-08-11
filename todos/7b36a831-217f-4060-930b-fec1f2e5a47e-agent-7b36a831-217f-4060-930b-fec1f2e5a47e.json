@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Limpar completamente o agente Turso (remover docs massivos)",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Limpar __pycache__ e arquivos temporários de todos agentes",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Limpar logs e PIDs antigos",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Simplificar estrutura do CrewAI-MKT",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Verificação final de limpeza",
+    "status": "completed",
+    "id": "5"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Organizar completamente o agente Marvin",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Organizar completamente o agente Turso",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Organizar completamente o agente CrewAI-MKT",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Organizar completamente o agente A2A-Estudo",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Verificar e testar todos os agentes",
+    "status": "completed",
+    "id": "5"
+  }
+]

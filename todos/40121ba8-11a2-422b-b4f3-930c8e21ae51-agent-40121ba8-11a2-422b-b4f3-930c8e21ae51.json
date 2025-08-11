@@ -1,0 +1,37 @@
+[
+  {
+    "content": "Analisar estrutura atual de cada agente",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Reorganizar agente Marvin seguindo padrão helloworld",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Reorganizar agente Turso seguindo padrão helloworld",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Reorganizar agente a2a-estudo seguindo padrão helloworld",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Simplificar e reorganizar crewai-mkt",
+    "status": "pending",
+    "id": "5"
+  },
+  {
+    "content": "Atualizar scripts start_all_agents.sh e stop_all_agents.sh",
+    "status": "completed",
+    "id": "6"
+  },
+  {
+    "content": "Limpar arquivos desnecessários e duplicados",
+    "status": "pending",
+    "id": "7"
+  }
+]
