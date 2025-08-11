@@ -145,10 +145,11 @@ Este é o fundamento de TODA comunicação A2A!
 - 💡 **Analogias** - Comparações com o cotidiano
 
 ### Recursos Extras
-- [Simulador HTML](exercicios/simulador.html) - Interface visual
-- [JSONs de Exemplo](recursos/) - Arquivos prontos
+- [Simulador HTML](helloworld/simulador.html) - Interface visual
+- [JSONs de Exemplo](helloworld/) - Arquivos prontos
 - [Glossário Simplificado](recursos/glossario.md) - Termos explicados
 - [FAQ](recursos/faq.md) - Perguntas frequentes
+- 🆕 [Arquivos de Implementação](recursos/arquivos-implementacao.md) - Como o agente funciona
 
 ---
 

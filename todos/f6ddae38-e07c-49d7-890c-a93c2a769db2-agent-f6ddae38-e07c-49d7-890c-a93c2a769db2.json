@@ -16,17 +16,17 @@
   },
   {
     "content": "Desenvolver aula 2 - Criando Tarefas",
-    "status": "in_progress",
+    "status": "completed",
     "id": "4"
   },
   {
     "content": "Desenvolver aula 3 - Enviando Mensagens",
-    "status": "pending",
+    "status": "completed",
     "id": "5"
   },
   {
     "content": "Desenvolver aula 4 - Recebendo Respostas",
-    "status": "pending",
+    "status": "completed",
     "id": "6"
   }
 ]

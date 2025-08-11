@@ -319,6 +319,14 @@ Imagine que VOCÊ é um agente. Crie seu Agent Card:
    - Por que o nome do agente é importante?
    - Como você usaria essa informação?
 
+### 📚 Material Extra
+
+**NOVO!** [Entendendo o .well-known/agent.json](explicacao-agent-json.md)
+- Versão completa e oficial do Agent Card
+- Explicação detalhada linha por linha
+- Comparação com a versão simplificada
+- **Recomendado** para alunos curiosos!
+
 ---
 
 ## ➡️ Próxima Aula

@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Limpar cache do Vite e dependências completamente",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Verificar se há conflitos de versões do React",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Reinstalar React Query com versão compatível",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Testar aplicação novamente",
+    "status": "completed",
+    "id": "4"
+  }
+]
