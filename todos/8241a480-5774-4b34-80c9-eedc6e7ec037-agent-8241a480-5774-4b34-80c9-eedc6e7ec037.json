@@ -1,0 +1,47 @@
+[
+  {
+    "content": "Analisar estrutura do crewai-mkt para verificar conformidade com padrão A2A",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Estudar implementação de referência em a2a-python",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Verificar se crewai-mkt tem server.py no padrão correto",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Verificar agent_executor.py com TaskState completo",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Ajustar crewai-mkt para seguir padrão A2A se necessário",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "Garantir que TaskState funcione (working → completed)",
+    "status": "completed",
+    "id": "6"
+  },
+  {
+    "content": "Adicionar crewai-mkt aos scripts de inicialização",
+    "status": "completed",
+    "id": "7"
+  },
+  {
+    "content": "Testar funcionamento completo do crewai-mkt",
+    "status": "pending",
+    "id": "8"
+  },
+  {
+    "content": "Documentar configuração e uso do crewai-mkt",
+    "status": "completed",
+    "id": "9"
+  }
+]
