@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Remover versão 1.0 FastMCP",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Remover versão 2.0 Complete",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Configurar apenas versão 3.0 Integrated",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Corrigir conexão do graphiti-turso",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Testar configuração final",
+    "status": "in_progress",
+    "id": "5"
+  }
+]
