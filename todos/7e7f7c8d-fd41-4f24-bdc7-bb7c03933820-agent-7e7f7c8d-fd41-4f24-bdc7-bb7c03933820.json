@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Implementar sistema daemon para manter Marvin sempre ativo",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Adicionar __main__.py com CLI usando click",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Criar sistema de monitoramento e auto-restart",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Adicionar integração com launchd do macOS",
+    "status": "pending",
+    "id": "4"
+  },
+  {
+    "content": "Integrar Marvin com MCP RAG server",
+    "status": "completed",
+    "id": "5"
+  }
+]

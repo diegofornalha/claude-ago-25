@@ -62,7 +62,7 @@ export function WebSocketSyncIndicator() {
     if (seconds < 10) return 'Agora mesmo';
     if (seconds < 60) return `Há ${seconds} segundos`;
     if (minutes === 1) return 'Há 1 minuto';
-    if (minutes < 60) return `Há ${minutes} minutos`;
+    if (minutes < 60) return `Há ${minutes} `;
     
     const hours = Math.floor(minutes / 60);
     if (hours === 1) return 'Há 1 hora';

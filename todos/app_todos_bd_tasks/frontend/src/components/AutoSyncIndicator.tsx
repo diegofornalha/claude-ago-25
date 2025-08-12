@@ -64,7 +64,7 @@ export function AutoSyncIndicator() {
     
     if (minutes < 1) return 'Agora mesmo';
     if (minutes === 1) return 'Há 1 minuto';
-    if (minutes < 60) return `Há ${minutes} minutos`;
+    if (minutes < 60) return `Há ${minutes} `;
     
     const hours = Math.floor(minutes / 60);
     if (hours === 1) return 'Há 1 hora';
@@ -162,7 +162,7 @@ export function AutoSyncIndicator() {
           
           <DropdownMenuItem onClick={() => handleIntervalChange(300000)}>
             <span className={syncInterval === 300000 ? 'font-bold' : ''}>
-              A cada 5 minutos
+              A cada 5 
             </span>
           </DropdownMenuItem>
           

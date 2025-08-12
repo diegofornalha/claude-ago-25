@@ -33,7 +33,7 @@ pr oibido criar algo na raiz dessa sendo pasta ou arquivo sem autolização expr
 
 5. **RESOLUÇÃO DE CONFLITOS**
    - Se detectar lock ativo de outra sessão:
-     - Aguardar até 5 minutos
+     - Aguardar até 5 
      - Ou trabalhar em contexto diferente
      - Ou criar arquivo específico da sessão
 
@@ -49,7 +49,7 @@ O sistema agora realiza limpeza automática semanal dos arquivos de tarefas (tod
 - Arquivos contendo apenas um array vazio "[]"
 - Arquivos sem tarefas válidas
 - **Arquivos órfãos de projetos que não existem mais**
-- Arquivos .lock expirados (mais de 5 minutos)
+- Arquivos .lock expirados (mais de 5 )
 
 Para limpar manualmente a qualquer momento:
 ```bash

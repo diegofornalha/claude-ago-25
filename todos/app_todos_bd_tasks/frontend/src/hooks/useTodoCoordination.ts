@@ -20,7 +20,7 @@ export function useTodoCoordination(config: CoordinationConfig) {
     sessionId, 
     context, 
     projectPath = 'app_todos_bd_tasks',
-    lockTimeout = 5 * 60 * 1000 // 5 minutos
+    lockTimeout = 5 * 60 * 1000 // 5 
   } = config
 
   const [hasLock, setHasLock] = useState(false)

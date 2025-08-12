@@ -16,12 +16,17 @@
   },
   {
     "content": "Coletar conteúdo das seções oficiais faltantes",
-    "status": "in_progress",
+    "status": "completed",
     "id": "4"
   },
   {
     "content": "Indexar streaming/async, extensions, community, examples",
-    "status": "pending",
+    "status": "completed",
     "id": "5"
+  },
+  {
+    "content": "Indexar SDK Python, Google oficial, Codelab",
+    "status": "completed",
+    "id": "6"
   }
 ]

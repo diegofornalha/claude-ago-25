@@ -70,7 +70,7 @@ graph TB
 - Princípios de design
 
 ```
-⏱️ Tempo: 45 minutos
+⏱️ Tempo: 45 
 🎯 Resultado: Visão sistêmica da arquitetura
 ```
 

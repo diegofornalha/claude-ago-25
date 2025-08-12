@@ -54,7 +54,7 @@ Startups:        100+ empresas emergentes
 ```
 🎯 Casos de uso: Finance+Procurement, Multi-cloud
 📈 Resultados: 40% redução tempo processos
-⏱️ Leitura: 30-45 minutos
+⏱️ Leitura: 30-45 
 ```
 
 ### **2. ☁️ [Multi-Cloud Coordination](multi-cloud-coord/)**
@@ -67,7 +67,7 @@ Startups:        100+ empresas emergentes
 ```
 🎯 Casos de uso: DevOps, Infrastructure
 📈 Resultados: 60% menos complexidade
-⏱️ Leitura: 25-30 minutos
+⏱️ Leitura: 25-30 
 ```
 
 ### **3. 💰 [Financial + Procurement](financial-procurement/)**
@@ -80,7 +80,7 @@ Startups:        100+ empresas emergentes
 ```
 🎯 Casos de uso: ERP integration, Automation  
 📈 Resultados: 80% automação
-⏱️ Leitura: 35-40 minutos
+⏱️ Leitura: 35-40 
 ```
 
 ### **4. 🏥 [Healthcare & Banking](healthcare-banking/)**
@@ -93,7 +93,7 @@ Startups:        100+ empresas emergentes
 ```
 🎯 Casos de uso: Compliance, Privacy
 📈 Resultados: 100% auditabilidade
-⏱️ Leitura: 20-25 minutos
+⏱️ Leitura: 20-25 
 ```
 
 ### **5. 📊 [Métricas e Performance](metricas-performance/)**
@@ -106,7 +106,7 @@ Startups:        100+ empresas emergentes
 ```
 🎯 Focus: ROI, Performance, Benchmarks
 📈 Resultados: Dados quantitativos
-⏱️ Leitura: 15-20 minutos
+⏱️ Leitura: 15-20 
 ```
 
 ---

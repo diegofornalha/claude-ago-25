@@ -41,7 +41,12 @@
   },
   {
     "content": "Criar arquivo de componentes principais baseado no RAG",
-    "status": "in_progress",
+    "status": "completed",
     "id": "9"
+  },
+  {
+    "content": "Revisar e aprimorar documentação com informações adicionais do RAG",
+    "status": "completed",
+    "id": "10"
   }
 ]

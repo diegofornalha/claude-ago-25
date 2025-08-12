@@ -88,5 +88,5 @@ export const db = dbProxy;
 ---
 
 *Problema resolvido em: Janeiro 2025*  
-*Tempo de investigação: ~45 minutos*  
+*Tempo de investigação: ~45 *  
 *Status: ✅ RESOLVIDO DEFINITIVAMENTE*

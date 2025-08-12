@@ -80,7 +80,7 @@ app.post('/auto', async (c) => {
   try {
     // Por enquanto, apenas executa uma vez
     // Futuramente: configurar intervalo de sync
-    const syncInterval = 5 * 60 * 1000 // 5 minutos
+    const syncInterval = 5 * 60 * 1000 // 5 
     
     console.log(`⏰ Sincronização automática configurada para cada ${syncInterval/1000}s`)
     

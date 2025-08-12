@@ -1,0 +1,50 @@
+{
+  "name": "marvin-agent",
+  "version": "1.0.0",
+  "description": "Agente Marvin A2A para extração e análise de dados usando framework Marvin",
+  "skills": [
+    {
+      "name": "analyze",
+      "description": "Analisa dados e fornece insights estruturados",
+      "parameters": {
+        "data": "string|object",
+        "type": "string"
+      }
+    },
+    {
+      "name": "execute",
+      "description": "Executa tarefas baseadas em instruções",
+      "parameters": {
+        "task": "string",
+        "context": "object"
+      }
+    },
+    {
+      "name": "assist",
+      "description": "Assistência geral com processamento de linguagem natural",
+      "parameters": {
+        "query": "string"
+      }
+    }
+  ],
+  "capabilities": {
+    "streaming": true,
+    "max_concurrent_tasks": 10,
+    "supports_sse": true,
+    "protocol_version": "1.0"
+  },
+  "endpoints": {
+    "discovery": "/.well-known/agent.json",
+    "tasks": "/tasks",
+    "task_status": "/tasks/{taskId}",
+    "docs": "/docs"
+  },
+  "authentication": {
+    "type": "none"
+  },
+  "metadata": {
+    "framework": "Marvin",
+    "language": "Python",
+    "port": 9998
+  }
+}

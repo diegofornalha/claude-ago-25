@@ -55,7 +55,7 @@ O A2A Protocol é como uma **cidade moderna** onde agentes vivem e trabalham jun
 - Terminologia fundamental
 
 ```
-⏱️ Tempo: 30 minutos
+⏱️ Tempo: 30 
 🎯 Resultado: Base conceitual sólida
 ```
 
@@ -79,7 +79,7 @@ O A2A Protocol é como uma **cidade moderna** onde agentes vivem e trabalham jun
 - Formato JSON padrão
 
 ```
-⏱️ Tempo: 45 minutos  
+⏱️ Tempo: 45   
 🎯 Resultado: Entender formatos de comunicação
 ```
 

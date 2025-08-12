@@ -1,0 +1,37 @@
+{
+  "a2a_configuration": {
+    "enabled": true,
+    "agent_name": "marvin_agent",
+    "project_name": "marvin",
+    "protocol_version": "0.3.0",
+    "port": 9998,
+    "discovery": {
+      "auto_register": true,
+      "registry_url": "http://localhost:8888/api/agents",
+      "heartbeat_interval": 30000
+    },
+    "communication": {
+      "transport": "http",
+      "format": "json",
+      "compression": false,
+      "timeout": 30000
+    },
+    "cooperation": {
+      "task_delegation": true,
+      "result_sharing": true,
+      "skill_advertisement": true
+    },
+    "security": {
+      "authentication": false,
+      "encryption": false,
+      "rate_limiting": true,
+      "max_requests_per_minute": 100
+    },
+    "monitoring": {
+      "metrics": true,
+      "logging": true,
+      "health_checks": true,
+      "log_level": "INFO"
+    }
+  }
+}

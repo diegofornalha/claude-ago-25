@@ -339,7 +339,7 @@ export const AlertsPanel: React.FC<{ alertSystem: RealTimeAlertSystem }> = ({ al
                       </p>
                       {rule.cooldown && (
                         <p className="text-xs text-gray-500">
-                          Cooldown: {rule.cooldown / 60000} minutos
+                          Cooldown: {rule.cooldown / 60000} 
                         </p>
                       )}
                     </div>

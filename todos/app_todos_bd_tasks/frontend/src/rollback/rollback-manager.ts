@@ -74,7 +74,7 @@ export class RollbackManager {
         responseTime: 2000, // 2s
         availabilityTarget: 0.995 // 99.5%
       },
-      monitoringWindow: 300000, // 5 minutos
+      monitoringWindow: 300000, // 5 
       cooldownPeriod: 3600000 // 1 hora
     };
   }

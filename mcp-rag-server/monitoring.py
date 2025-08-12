@@ -200,7 +200,7 @@ class MetricsCollector:
                         'severity': self._get_alert_severity(metric_name, latest_value, threshold)
                     }
                     
-                    # Evitar spam de alertas (mesmo alerta em menos de 5 minutos)
+                    # Evitar spam de alertas (mesmo alerta em menos de 5 )
                     if not self._is_duplicate_alert(alert):
                         self.alerts.append(alert)
                         self.logger.warning(f"ALERT: {metric_name} = {latest_value:.2f} > {threshold}")
@@ -224,7 +224,7 @@ class MetricsCollector:
     
     def _is_duplicate_alert(self, new_alert):
         """Verifica se é um alerta duplicado recente"""
-        cutoff_time = new_alert['timestamp'] - 300  # 5 minutos
+        cutoff_time = new_alert['timestamp'] - 300  # 5 
         
         for alert in reversed(self.alerts):
             if alert['timestamp'] < cutoff_time:

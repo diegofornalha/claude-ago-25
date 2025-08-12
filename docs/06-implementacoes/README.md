@@ -43,38 +43,50 @@ Aqui você encontra **implementações práticas** do A2A Protocol em diferentes
 
 ### **1. 🐍 [Python SDK](python/)**
 **A implementação mais completa**
-- **Framework**: asyncio + FastAPI
-- **Casos de uso**: Prototipagem, ML/AI integration
-- **Recursos**: Full A2A compliance, rich examples
+- **Framework**: asyncio + FastAPI + Google ADK
+- **Casos de uso**: Prototipagem, ML/AI integration, Google Cloud
+- **Recursos**: Full A2A compliance, rich examples, Google ADK integration
 - **Status**: ✅ Production ready
 
 ```python
-# Quick start
-from a2a_sdk import Agent, Capability
+# Quick start com Google ADK
+from google.adk import Agent
+from google.adk.a2a import A2AServer
 
-agent = Agent("my-agent", version="1.0.0")
-@agent.capability("greet")
-async def greet(name: str) -> str:
-    return f"Hello, {name}!"
+agent = Agent(
+    name="TranslatorAgent",
+    description="Agent especializado em tradução",
+    capabilities=["translate", "detect_language"]
+)
 
-await agent.start()
+# Configurar servidor A2A
+server = A2AServer(agent)
+server.run(port=8080)
 ```
+
+**Características avançadas**:
+- ✅ Registro de agentes, comunicação HTTP/WebSocket
+- ✅ Serialização de mensagens, autenticação  
+- ✅ Descoberta de serviços, negociação de contratos
+- ✅ Event handlers, integração asyncio
+- ✅ Google ADK support (RemoteA2aAgent)
 
 ```
 📚 Documentação: Completa + exemplos
 ⚡ Performance: 1K-10K req/sec  
 🎯 Recomendado para: Beginners, ML engineers
-⏱️ Setup time: 15 minutos
+⏱️ Setup time: 15 
 ```
 
 ### **2. ☕ [Java SDK](java/)**
 **Enterprise-grade implementation**
-- **Framework**: Spring Boot + WebFlux
-- **Casos de uso**: Enterprise systems, high throughput
-- **Recursos**: Production patterns, monitoring
+- **Framework**: Spring Boot + WebFlux + Maven Multi-módulo
+- **Casos de uso**: Enterprise systems, high throughput, microservices
+- **Recursos**: Production patterns, monitoring, Spring ecosystem
 - **Status**: ✅ Production ready
 
 ```java
+// Implementação Java pura do protocolo A2A do Google
 @A2AAgent(name = "my-agent", version = "1.0.0")
 @Component
 public class MyAgent {
@@ -86,21 +98,28 @@ public class MyAgent {
 }
 ```
 
+**Arquitetura Maven Multi-módulo**:
+- ✅ Integração nativa com ecossistema Spring
+- ✅ Suporte completo a recursos empresariais
+- ✅ Padrões de microserviços estabelecidos
+- ✅ Monitoring e observabilidade integrada
+
 ```
 📚 Documentação: Enterprise focused
 ⚡ Performance: 10K-50K req/sec
 🎯 Recomendado para: Enterprise, high-scale
-⏱️ Setup time: 30 minutos
+⏱️ Setup time: 30 
 ```
 
 ### **3. 📜 [TypeScript SDK](typescript/)**
 **Full-stack JavaScript implementation**  
-- **Framework**: Express.js + Socket.io
-- **Casos de uso**: Web apps, Node.js backends
-- **Recursos**: Browser + server support
+- **Framework**: Express.js + Socket.io + NestJS
+- **Casos de uso**: Web apps, Node.js backends, microservices
+- **Recursos**: Browser + server support, modular architecture
 - **Status**: ✅ Production ready
 
 ```typescript
+// Implementação TypeScript com foco em modularidade
 import { A2AAgent, capability } from '@a2a/sdk'
 
 @A2AAgent({ name: 'my-agent', version: '1.0.0' })
@@ -112,11 +131,17 @@ class MyAgent {
 }
 ```
 
+**Recursos avançados**:
+- ✅ Arquitetura modular e extensível
+- ✅ Facilidade de integração com aplicações web  
+- ✅ Framework Node.js para aplicações escaláveis (NestJS)
+- ✅ Arquitetura baseada em decorators
+
 ```
 📚 Documentação: Beginner friendly
 ⚡ Performance: 5K-15K req/sec
 🎯 Recomendado para: Web devs, full-stack
-⏱️ Setup time: 10 minutos
+⏱️ Setup time: 10 
 ```
 
 ### **4. 🟦 [C# .NET SDK](dotnet/)**
@@ -142,17 +167,18 @@ public class MyAgent : IA2AAgent
 📚 Documentação: Visual Studio integrated
 ⚡ Performance: 15K-40K req/sec
 🎯 Recomendado para: .NET teams, Azure users
-⏱️ Setup time: 20 minutos
+⏱️ Setup time: 20 
 ```
 
 ### **5. ⚡ [Rust SDK](rust/)**
 **Ultra-high performance implementation**
-- **Framework**: Tokio + Axum
-- **Casos de uso**: Performance-critical systems
-- **Recursos**: Zero-copy, memory safety
+- **Framework**: Tokio + Axum + Hexagonal Architecture
+- **Casos de uso**: Performance-critical systems, high-concurrency
+- **Recursos**: Zero-copy, memory safety, architectural patterns
 - **Status**: 🟡 Beta (high quality)
 
 ```rust
+// Implementação Rust idiomática seguindo princípios de arquitetura hexagonal
 use a2a_sdk::prelude::*;
 
 #[derive(A2AAgent)]
@@ -167,19 +193,25 @@ impl MyAgent {
 }
 ```
 
+**Características técnicas**:
+- ✅ Foco em segurança de memória
+- ✅ Performance e confiabilidade extremas
+- ✅ Arquitetura hexagonal idiomática
+- ✅ Zero-overhead abstractions
+
 ```
 📚 Documentação: Technical, complete
 ⚡ Performance: 50K-100K req/sec
 🎯 Recomendado para: Performance crítica
-⏱️ Setup time: 45 minutos
+⏱️ Setup time: 45 
 ```
 
 ### **6. 🔷 [Go SDK](go/)**
 **Cloud-native implementation**
-- **Framework**: Gin + Gorilla WebSocket
-- **Casos de uso**: Cloud infrastructure, DevOps
-- **Recursos**: Small footprint, fast startup
-- **Status**: 🟡 Alpha (functional)
+- **Framework**: Gin + Gorilla WebSocket + Advanced Features
+- **Casos de uso**: Cloud infrastructure, DevOps, high-scale systems
+- **Recursos**: Small footprint, fast startup, streaming support
+- **Status**: 🟡 Alpha (functional, advanced features)
 
 ```go
 package main
@@ -201,12 +233,43 @@ func main() {
 }
 ```
 
+**Recursos avançados**:
+- ✅ Suporte completo cliente/servidor
+- ✅ Gerenciamento de tarefas em memória
+- ✅ Respostas de streaming
+- ✅ Performance otimizada para alta escala
+
 ```
 📚 Documentação: Concise, practical
 ⚡ Performance: 20K-60K req/sec  
 🎯 Recomendado para: DevOps, microservices
-⏱️ Setup time: 25 minutos
+⏱️ Setup time: 25 
 ```
+
+---
+
+## 🌟 **Projetos Únicos da Comunidade**
+
+### **🤖 Aira - Rede A2A Completa**
+**Implementação de rede A2A para hospedagem, registro, descoberta e interação**
+- ✅ Plataforma completa para gestão de agentes
+- ✅ Descoberta automática de serviços
+- ✅ Hospedagem, registro e interação centralizados
+- 🔗 **Casos de uso**: Infraestrutura de agentes distribuídos
+
+### **🧠 Cognisphere - Framework IA Avançado**
+**Framework de desenvolvimento de agentes IA construído sobre Google's ADK**
+- ✅ Ferramentas avançadas de desenvolvimento
+- ✅ Integração com múltiplos modelos de IA
+- ✅ Baseado em Google ADK para máxima compatibilidade
+- 🔗 **Casos de uso**: Desenvolvimento IA empresarial
+
+### **🌐 Grasp - Navegador Inteligente**
+**Navegador auto-hospedado usando agente com suporte MCP e A2A integrado**
+- ✅ Navegação inteligente assistida por IA
+- ✅ Integração de múltiplos protocolos (MCP + A2A)
+- ✅ Auto-hospedado para máxima privacidade
+- 🔗 **Casos de uso**: Browsing inteligente, pesquisa assistida
 
 ---
 
@@ -255,13 +318,25 @@ func main() {
 
 ### **⚡ 5-Minute Setup**
 
-#### **Escolha sua linguagem:**
+#### **Python com Google ADK (Recomendado):**
 ```bash
-# Python
-git clone https://github.com/a2a-protocol/python-sdk
-cd python-sdk && pip install -r requirements.txt
-python examples/hello_world.py
+# Criar projeto e ambiente virtual
+mkdir adk-a2a-demo
+cd adk-a2a-demo
+python -m venv .venv
 
+# Ativar ambiente virtual
+# Linux/macOS:
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
+
+# Instalar ADK com suporte A2A (Python 3.10+)
+pip install google-adk[a2a]>=1.6.1
+```
+
+#### **Outras linguagens:**
+```bash
 # Java  
 git clone https://github.com/a2a-protocol/java-sdk
 cd java-sdk && ./gradlew bootRun
@@ -281,6 +356,47 @@ cd rust-sdk && cargo run --example hello_world
 # Go
 git clone https://github.com/a2a-protocol/go-sdk
 cd go-sdk && go run examples/hello_world.go
+```
+
+#### **Exemplo Completo Python + ADK:**
+```python
+# exemplo_agente_servidor.py
+from google.adk import Agent
+from google.adk.a2a import A2AServer
+
+# Definir capacidades do agente
+agent = Agent(
+    name="InterestingFactsAgent",
+    description="Agente que encontra fatos interessantes",
+    capabilities=["get_facts", "search_topics"]
+)
+
+# Configurar servidor A2A
+server = A2AServer(agent)
+
+if __name__ == "__main__":
+    print("🚀 Iniciando agente A2A...")
+    server.run(port=8080)
+```
+
+#### **Cliente remoto:**
+```python  
+# cliente_remoto.py
+from google.adk.a2a import RemoteA2aAgent
+
+# Conectar a agente remoto
+remote_agent = RemoteA2aAgent(
+    url="http://localhost:8080",
+    api_key="your-api-key"  # Configure conforme necessário
+)
+
+# Usar o agente
+result = await remote_agent.execute(
+    task="get_facts",
+    params={"topic": "Python programming", "count": 3}
+)
+
+print("📊 Resultado:", result)
 ```
 
 ### **📋 Checklist Pós-Setup**
@@ -462,7 +578,7 @@ A2A Protocol é **language-agnostic** por design. Cada linguagem tem seus pontos
 
 ### **🚀 Getting Started**
 1. **Escolha** baseada no seu contexto
-2. **Quick start** em 5 minutos
+2. **Quick start** em 5 
 3. **Exemplos** funcionais imediatos
 4. **Scale** para produção gradualmente
 

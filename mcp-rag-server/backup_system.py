@@ -112,7 +112,7 @@ class BackupSystem:
                 time.sleep(60)  # Verificar a cada minuto
             except Exception as e:
                 self.logger.error(f"Error in backup loop: {e}")
-                time.sleep(300)  # Aguardar 5 minutos em caso de erro
+                time.sleep(300)  # Aguardar 5  em caso de erro
     
     def create_backup(self, backup_type="manual", include_logs=True):
         """Cria backup completo dos dados"""

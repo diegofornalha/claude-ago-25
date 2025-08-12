@@ -1,0 +1,38 @@
+{
+  "name": "marvin-agent",
+  "description": "Agente auxiliar inteligente com capacidades de análise e execução de tarefas",
+  "version": "1.0.0",
+  "url": "http://localhost:9998",
+  "skills": [
+    {
+      "name": "analyze",
+      "description": "Analisa dados e fornece insights",
+      "parameters": {
+        "data": "string|object",
+        "type": "string"
+      }
+    },
+    {
+      "name": "execute",
+      "description": "Executa tarefas e comandos específicos",
+      "parameters": {
+        "task": "string",
+        "context": "object"
+      }
+    },
+    {
+      "name": "assist",
+      "description": "Fornece assistência e suporte geral",
+      "parameters": {
+        "query": "string",
+        "options": "object"
+      }
+    }
+  ],
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "max_concurrent_tasks": 10,
+    "supported_content_types": ["text/plain", "application/json"]
+  }
+}

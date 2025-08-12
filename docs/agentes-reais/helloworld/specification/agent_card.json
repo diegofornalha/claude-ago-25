@@ -1,0 +1,31 @@
+{
+  "name": "helloworld-agent",
+  "description": "Agente simples que cumprimenta pessoas em múltiplos idiomas",
+  "version": "1.0.0",
+  "url": "http://localhost:9999",
+  "skills": [
+    {
+      "name": "hello_world",
+      "description": "Returns a simple hello world greeting",
+      "parameters": {
+        "name": "string",
+        "language": "string"
+      }
+    },
+    {
+      "name": "super_hello_world",
+      "description": "Returns an enthusiastic hello world greeting with extra data",
+      "parameters": {
+        "name": "string",
+        "language": "string",
+        "excitement_level": "number"
+      }
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "max_concurrent_tasks": 5,
+    "supported_content_types": ["text/plain", "application/json"]
+  }
+}

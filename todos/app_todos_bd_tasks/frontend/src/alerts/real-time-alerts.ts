@@ -54,7 +54,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'error',
       title: 'Taxa de Erro Elevada',
       message: (data) => `Taxa de erro: ${(data.errorRate * 100).toFixed(1)}%`,
-      cooldown: 300000, // 5 minutos
+      cooldown: 300000, // 5 
       enabled: true
     });
 
@@ -67,7 +67,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'warning',
       title: 'Memória Quase Cheia',
       message: (data) => `Uso de memória: ${data.memoryUsage.toFixed(1)}%`,
-      cooldown: 600000, // 10 minutos
+      cooldown: 600000, // 10 
       enabled: true
     });
 
@@ -80,7 +80,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'error',
       title: 'Armazenamento Crítico',
       message: (data) => `Apenas ${(100 - data.storageUsage).toFixed(1)}% de espaço livre`,
-      cooldown: 1800000, // 30 minutos
+      cooldown: 1800000, // 30 
       enabled: true
     });
 
@@ -93,7 +93,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'warning',
       title: 'Fila de Sync Grande',
       message: (data) => `${data.syncQueueSize} itens aguardando sincronização`,
-      cooldown: 900000, // 15 minutos
+      cooldown: 900000, // 15 
       enabled: true
     });
 
@@ -101,12 +101,12 @@ export class RealTimeAlertSystem extends EventEmitter {
     this.addRule({
       id: 'prolonged-disconnect',
       name: 'Desconexão Prolongada',
-      condition: (data) => data.disconnectedTime > 300000, // 5 minutos
+      condition: (data) => data.disconnectedTime > 300000, // 5 
       severity: 'medium',
       type: 'warning',
       title: 'Offline Há Muito Tempo',
-      message: (data) => `Desconectado há ${Math.round(data.disconnectedTime / 60000)} minutos`,
-      cooldown: 1800000, // 30 minutos
+      message: (data) => `Desconectado há ${Math.round(data.disconnectedTime / 60000)} `,
+      cooldown: 1800000, // 30 
       enabled: true
     });
 
@@ -119,7 +119,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'warning',
       title: 'Performance Degradada',
       message: (data) => `Latência P95: ${data.latencyP95.toFixed(0)}ms`,
-      cooldown: 600000, // 10 minutos
+      cooldown: 600000, // 10 
       enabled: true
     });
 
@@ -132,7 +132,7 @@ export class RealTimeAlertSystem extends EventEmitter {
       type: 'warning',
       title: 'Muitos Conflitos de Dados',
       message: (data) => `${(data.conflictRate * 100).toFixed(1)}% das operações geraram conflitos`,
-      cooldown: 1200000, // 20 minutos
+      cooldown: 1200000, // 20 
       enabled: true
     });
 
