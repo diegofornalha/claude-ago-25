@@ -64,13 +64,36 @@ class HelloWorldAgentExecutor(AgentExecutor):
             )
             logger.info(f"🔄 Task {task.id} marked as WORKING")
 
-            # Process the request
-            result = await self.agent.process_request(query, task.contextId)
+            # Process the request - criar dict de requisição
+            request_data = {
+                "type": "hello_world",  # tipo padrão
+                "data": {
+                    "query": query,
+                    "context_id": task.contextId
+                }
+            }
             
-            is_task_complete = result.get("is_task_complete", True)
-            require_user_input = result.get("require_user_input", False)
-            result_text = result.get("result", "Hello World!")
-            data = result.get("data", {})
+            # Detectar tipo de requisição baseado no conteúdo
+            if "super" in query.lower() or "enthusiasm" in query.lower():
+                request_data["type"] = "super_hello_world"
+                request_data["data"]["excitement_level"] = 8
+                request_data["data"]["name"] = "User"
+                request_data["data"]["language"] = "english"
+            elif "português" in query.lower() or "portugues" in query.lower():
+                request_data["type"] = "hello_world"
+                request_data["data"]["name"] = "Usuário"
+                request_data["data"]["language"] = "português"
+            else:
+                request_data["data"]["name"] = "User"
+                request_data["data"]["language"] = "english"
+            
+            result = await self.agent.process_request(request_data)
+            
+            # Extrair dados do resultado
+            is_task_complete = True
+            require_user_input = False
+            result_text = result.get("greeting", result.get("response", "Hello World!"))
+            data = result  # Todo o resultado é o data
 
             # Create artifact based on result
             if data:

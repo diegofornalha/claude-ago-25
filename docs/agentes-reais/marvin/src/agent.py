@@ -38,6 +38,10 @@ class MarvinAgent:
             "extração de dados estruturados"
         ]
         self.memory = {}  # Memória simples para contexto
+        self.conversation_context = {}  # Contexto da conversa atual
+        self.last_extraction = None  # Última extração realizada
+        self.collecting_data = False  # Flag para indicar coleta progressiva
+        self.partial_data = {}  # Dados sendo coletados progressivamente
         
         # Integração com RAG se disponível
         self.rag_agent = None
@@ -106,12 +110,201 @@ class MarvinAgent:
             
         return result
     
+    async def extract_from_natural_language(self, text: str) -> Dict[str, Any]:
+        """
+        Extrai dados de linguagem natural e acumula progressivamente
+        """
+        import re
+        
+        # Padrões para linguagem natural
+        patterns = {
+            'nome': [
+                r'(?:meu nome é|me chamo|sou o?a?)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*?)(?:\s|,|$)',
+                r'(?:nome|nome dele?a? é)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*?)(?:\s|,|$)',
+                r'^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)$'  # Nome sozinho (sem outras palavras)
+            ],
+            'email': [
+                r'(?:meu email é|email:?)\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+                r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',  # Email direto
+            ],
+            'telefone': [
+                r'(?:meu (?:telefone|celular|número) é|tel:?)\s*([\d\s\-\(\)]+)',
+                r'(?:telefone|celular|whatsapp|contato):?\s*([\d\s\-\(\)]+)',
+                r'(\(?[0-9]{2,3}\)?[\s\-]?[0-9]{4,5}[\s\-]?[0-9]{4})'  # Telefone direto
+            ],
+            'empresa': [
+                r'(?:trabalho na|empresa é|trabalho para a?o?)\s+([A-Za-z]+(?:\s+[A-Za-z]+)*?)(?:\s+(?:como|de|empresa|company|ltda|inc)|$)',
+                r'(?:empresa|company):?\s*([A-Za-z]+(?:\s+[A-Za-z]+)*?)(?:\s|$)',
+                r'(?:^|\s)na\s+([A-Za-z]+(?:\s+[A-Za-z]+)*?)(?:\s+como|\s+de|$)'  # "na Coflow como..."
+            ],
+            'cargo': [
+                r'(?:sou|trabalho como|meu cargo é|cargo:?)\s*([A-Za-z]+(?:\s+[A-Za-z]+)*?)(?:\s+na|\s+da|\s*$)',
+                r'(?:como|cargo de)\s+(CEO|CTO|CFO|diretor|gerente|desenvolvedor|analista)',
+                r'\b(CEO|CTO|CFO|diretor|gerente|desenvolvedor|analista)\b'
+            ],
+            'idade': [
+                r'(?:tenho|idade:?)\s*(\d+)\s*(?:anos)?',
+                r'(\d+)\s*anos(?:\s+de idade)?',
+                r'(?:idade é de?)\s*(\d+)'
+            ]
+        }
+        
+        # Extrair dados usando padrões
+        extracted_now = {}
+        for field, field_patterns in patterns.items():
+            # Não sobrescrever se já temos esse campo
+            if field in self.partial_data:
+                continue
+                
+            for pattern in field_patterns:
+                match = re.search(pattern, text, re.IGNORECASE)
+                if match:
+                    value = match.group(1).strip()
+                    if field == 'telefone':
+                        # Limpar telefone
+                        value = re.sub(r'[^\d]', '', value)
+                    elif field == 'idade':
+                        value = f"{value} anos"
+                    extracted_now[field] = value
+                    break
+        
+        # Atualizar dados parciais apenas com novos campos
+        self.partial_data.update(extracted_now)
+        
+        # Verificar se começou uma nova coleta
+        if any(phrase in text.lower() for phrase in ['quero me cadastrar', 'quero cadastrar', 'vou passar meus dados', 'preciso me cadastrar', 'meus dados são', 'fazer cadastro', 'preciso fazer']):
+            self.collecting_data = True
+            self.partial_data = extracted_now  # Resetar com dados atuais
+            
+            return {
+                "response": "📝 Claro! Pode me passar seus dados. Vou anotando conforme você for me informando. Pode começar com seu nome.",
+                "collecting": True,
+                "partial_data": self.partial_data,
+                "timestamp": datetime.now().isoformat()
+            }
+        
+        # Se está coletando dados progressivamente
+        if self.collecting_data or extracted_now:
+            # Campos necessários
+            required_fields = ['nome', 'email', 'telefone', 'empresa', 'cargo', 'idade']
+            missing_fields = [f for f in required_fields if f not in self.partial_data]
+            
+            # Gerar resposta apropriada
+            if extracted_now:
+                # Confirmar o que foi extraído
+                confirmations = []
+                for field, value in extracted_now.items():
+                    field_name = {
+                        'nome': 'nome',
+                        'email': 'email',
+                        'telefone': 'telefone',
+                        'empresa': 'empresa',
+                        'cargo': 'cargo',
+                        'idade': 'idade'
+                    }.get(field, field)
+                    confirmations.append(f"• **{field_name.title()}**: {value}")
+                
+                response = f"✅ Anotei:\n" + "\n".join(confirmations)
+                
+                # Se ainda faltam campos
+                if missing_fields:
+                    if len(missing_fields) == 1:
+                        field_question = {
+                            'nome': 'Qual é o seu nome?',
+                            'email': 'Qual é o seu email?',
+                            'telefone': 'Qual é o seu telefone?',
+                            'empresa': 'Em qual empresa você trabalha?',
+                            'cargo': 'Qual é o seu cargo?',
+                            'idade': 'Qual é a sua idade?'
+                        }
+                        response += f"\n\n❓ Só falta me informar: {field_question.get(missing_fields[0], missing_fields[0])}"
+                    else:
+                        response += f"\n\n📋 Ainda preciso dos seguintes dados:"
+                        for field in missing_fields[:3]:  # Mostrar no máximo 3
+                            response += f"\n• {field.title()}"
+                else:
+                    # Todos os dados foram coletados!
+                    self.collecting_data = False
+                    response = f"""🎉 **Perfeito! Cadastro completo!**
+
+Aqui estão todos os seus dados:
+
+• **Nome**: {self.partial_data.get('nome', 'N/A')}
+• **Email**: {self.partial_data.get('email', 'N/A')}
+• **Telefone**: {self.partial_data.get('telefone', 'N/A')}
+• **Empresa**: {self.partial_data.get('empresa', 'N/A')}
+• **Cargo**: {self.partial_data.get('cargo', 'N/A')}
+• **Idade**: {self.partial_data.get('idade', 'N/A')}
+
+Dados salvos com sucesso! ✨"""
+                    # Salvar como última extração
+                    self.last_extraction = {
+                        "extracted_data": self.partial_data.copy(),
+                        "timestamp": datetime.now().isoformat()
+                    }
+                
+                return {
+                    "response": response,
+                    "partial_data": self.partial_data,
+                    "missing_fields": missing_fields,
+                    "complete": len(missing_fields) == 0,
+                    "timestamp": datetime.now().isoformat()
+                }
+            else:
+                # Nada foi extraído, perguntar o que falta
+                if missing_fields:
+                    field_question = {
+                        'nome': 'Qual é o seu nome?',
+                        'email': 'Pode me informar seu email?',
+                        'telefone': 'Qual é o seu telefone?',
+                        'empresa': 'Em qual empresa você trabalha?',
+                        'cargo': 'Qual é o seu cargo?',
+                        'idade': 'Qual é a sua idade?'
+                    }
+                    return {
+                        "response": f"🤔 {field_question.get(missing_fields[0], f'Pode me informar seu {missing_fields[0]}?')}",
+                        "partial_data": self.partial_data,
+                        "missing_fields": missing_fields,
+                        "timestamp": datetime.now().isoformat()
+                    }
+        
+        return None  # Não é uma extração de dados
+    
     async def extract_data(self, text: str) -> Dict[str, Any]:
         """
         Extrai dados estruturados de texto não estruturado
         """
         import re
         logger.info(f"Extraindo dados do texto")
+        
+        # Verificar se é complemento de extração anterior
+        if self.last_extraction and len(text) < 50:
+            # Texto curto, pode ser complemento
+            if "idade" in text.lower() and re.search(r'\d+', text):
+                # Extrair idade do texto atual
+                idade_match = re.search(r'(\d+)\s*(?:anos?)?', text)
+                if idade_match:
+                    idade = idade_match.group(1)
+                    # Atualizar última extração
+                    self.last_extraction["extracted_data"]["idade"] = f"{idade} anos"
+                    self.last_extraction["complemented"] = True
+                    
+                    # Criar resposta inteligente
+                    nome = self.last_extraction["extracted_data"].get("nome", "a pessoa")
+                    return {
+                        "timestamp": datetime.now().isoformat(),
+                        "source_text": text,
+                        "response": f"✅ Entendi! Agora tenho todos os dados de {nome}:\n\n" +
+                                  f"• **Nome**: {self.last_extraction['extracted_data'].get('nome', 'Diego')}\n" +
+                                  f"• **Email**: {self.last_extraction['extracted_data'].get('email', '')}\n" +
+                                  f"• **Telefone**: {self.last_extraction['extracted_data'].get('telefone', '')}\n" +
+                                  f"• **Empresa**: {self.last_extraction['extracted_data'].get('empresa', '')}\n" +
+                                  f"• **Cargo**: {self.last_extraction['extracted_data'].get('cargo', '')}\n" +
+                                  f"• **Idade**: {idade} anos\n\n" +
+                                  "Dados completos extraídos com sucesso! 📊",
+                        "extracted_data": self.last_extraction["extracted_data"],
+                        "context_aware": True
+                    }
         
         extraction = {
             "timestamp": datetime.now().isoformat(),
@@ -123,6 +316,7 @@ class MarvinAgent:
                 "phones": [],
                 "companies": [],
                 "positions": [],
+                "ages": [],
                 "urls": [],
                 "dates": [],
                 "numbers": []
@@ -147,11 +341,29 @@ class MarvinAgent:
         url_pattern = r'https?://[^\s]+'
         extraction["entities"]["urls"] = re.findall(url_pattern, text)
         
-        # Extração de nomes próprios (heurística simples)
-        # Procura por palavras capitalizadas consecutivas
-        name_pattern = r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b'
-        potential_names = re.findall(name_pattern, text)
-        extraction["entities"]["names"] = potential_names
+        # Extração de nomes próprios melhorada
+        # Procura por "nome:" ou palavras capitalizadas
+        if "nome:" in text.lower():
+            nome_match = re.search(r'nome:\s*([^,\n]+)', text, re.IGNORECASE)
+            if nome_match:
+                extraction["entities"]["names"].append(nome_match.group(1).strip())
+        else:
+            # Fallback para palavras capitalizadas consecutivas
+            name_pattern = r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b'
+            potential_names = re.findall(name_pattern, text)
+            extraction["entities"]["names"] = potential_names
+        
+        # Extração de idade
+        idade_patterns = [
+            r'idade:\s*(\d+)\s*(?:anos?)?',
+            r'(\d+)\s*anos?\s*(?:de idade)?',
+            r'tem\s*(\d+)\s*anos?'
+        ]
+        for pattern in idade_patterns:
+            idade_match = re.search(pattern, text, re.IGNORECASE)
+            if idade_match:
+                extraction["entities"]["ages"].append(f"{idade_match.group(1)} anos")
+                break
         
         # Identificar cargos/posições comuns
         position_keywords = ['CEO', 'CTO', 'CFO', 'diretor', 'gerente', 'coordenador', 
@@ -162,12 +374,18 @@ class MarvinAgent:
             if keyword.lower() in text_lower:
                 extraction["entities"]["positions"].append(keyword)
         
-        # Identificar empresas (palavras antes de termos como "empresa", "ltda", etc)
-        company_indicators = ['empresa', 'ltda', 'inc', 'corp', 'company', 'agentes']
-        for indicator in company_indicators:
-            pattern = r'\b(\w+(?:\s+\w+)*)\s+' + indicator + r'\b'
-            companies = re.findall(pattern, text, re.IGNORECASE)
-            extraction["entities"]["companies"].extend(companies)
+        # Identificar empresas melhorado
+        if "empresa:" in text.lower():
+            empresa_match = re.search(r'empresa:\s*([^,\n]+)', text, re.IGNORECASE)
+            if empresa_match:
+                extraction["entities"]["companies"].append(empresa_match.group(1).strip())
+        else:
+            # Fallback para indicadores de empresa
+            company_indicators = ['empresa', 'ltda', 'inc', 'corp', 'company']
+            for indicator in company_indicators:
+                pattern = r'\b(\w+(?:\s+\w+)*)\s+' + indicator + r'\b'
+                companies = re.findall(pattern, text, re.IGNORECASE)
+                extraction["entities"]["companies"].extend(companies)
         
         # Extração de números
         number_pattern = r'\b\d+(?:\.\d+)?\b'
@@ -184,12 +402,31 @@ class MarvinAgent:
             extraction["extracted_data"]["empresa"] = extraction["entities"]["companies"][0]
         if extraction["entities"]["positions"]:
             extraction["extracted_data"]["cargo"] = extraction["entities"]["positions"][0]
+        if extraction["entities"]["ages"]:
+            extraction["extracted_data"]["idade"] = extraction["entities"]["ages"][0]
         
         # Adicionar estatísticas
         extraction["statistics"] = {
             "total_entities_found": sum(len(v) for v in extraction["entities"].values()),
             "entity_types_found": len([k for k, v in extraction["entities"].items() if v])
         }
+        
+        # Salvar como última extração para contexto
+        self.last_extraction = extraction
+        
+        # Se extraiu todos os campos principais, criar resposta formatada
+        if len(extraction["extracted_data"]) >= 5:
+            dados = extraction["extracted_data"]
+            extraction["response"] = f"""✅ **Dados extraídos com sucesso!**
+
+• **Nome**: {dados.get('nome', 'N/A')}
+• **Email**: {dados.get('email', 'N/A')}
+• **Telefone**: {dados.get('telefone', 'N/A')}
+• **Empresa**: {dados.get('empresa', 'N/A')}
+• **Cargo**: {dados.get('cargo', 'N/A')}
+• **Idade**: {dados.get('idade', 'N/A')}
+
+Total de {extraction['statistics']['total_entities_found']} entidades encontradas."""
         
         return extraction
     
@@ -199,7 +436,19 @@ class MarvinAgent:
         """
         logger.info(f"Fornecendo assistência para: {query}")
         
-        # Verificar se é uma solicitação de extração
+        # Tentar extrair dados de linguagem natural primeiro
+        natural_extraction = await self.extract_from_natural_language(query)
+        if natural_extraction:
+            return natural_extraction
+        
+        # Verificar se é complemento de uma extração anterior (ex: "idade: 33 anos")
+        if self.last_extraction and len(query) < 50 and ":" in query:
+            # Pode ser dados adicionais
+            extraction_result = await self.extract_data(query)
+            if extraction_result.get("context_aware"):
+                return extraction_result
+        
+        # Verificar se é uma solicitação de extração formal
         extraction_keywords = ['extraia', 'extrai', 'extract', 'parse', 'identifique', 
                               'encontre', 'busque', 'procure']
         
