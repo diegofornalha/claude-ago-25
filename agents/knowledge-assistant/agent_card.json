@@ -1,0 +1,119 @@
+{
+  "name": "knowledge-assistant",
+  "version": "1.0.0",
+  "description": "Agente assistente de conhecimento com capacidades de busca, análise e síntese de informações usando RAG",
+  "author": "A2A Labs",
+  "url": "http://localhost:9999",
+  "protocol": "a2a/1.0",
+  "skills": [
+    {
+      "id": "search_knowledge",
+      "name": "Buscar Conhecimento",
+      "description": "Busca informações na base de conhecimento usando busca semântica ou textual",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "description": "Termo ou pergunta para buscar",
+          "required": true
+        },
+        "use_semantic": {
+          "type": "boolean",
+          "description": "Usar busca semântica (true) ou textual (false)",
+          "default": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Número máximo de resultados",
+          "default": 5
+        }
+      },
+      "tags": ["search", "knowledge", "rag"],
+      "examples": [
+        {
+          "input": {
+            "query": "o que é A2A protocol?",
+            "use_semantic": true
+          },
+          "output": "Resultados relevantes sobre A2A Protocol..."
+        }
+      ]
+    },
+    {
+      "id": "add_knowledge",
+      "name": "Adicionar Conhecimento",
+      "description": "Adiciona novo documento à base de conhecimento",
+      "parameters": {
+        "title": {
+          "type": "string",
+          "description": "Título do documento",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Conteúdo do documento",
+          "required": true
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags para categorização",
+          "items": {"type": "string"}
+        },
+        "category": {
+          "type": "string",
+          "description": "Categoria do documento"
+        }
+      },
+      "tags": ["add", "knowledge", "document"]
+    },
+    {
+      "id": "analyze_topic",
+      "name": "Analisar Tópico",
+      "description": "Analisa um tópico específico combinando múltiplas fontes de conhecimento",
+      "parameters": {
+        "topic": {
+          "type": "string",
+          "description": "Tópico para análise aprofundada",
+          "required": true
+        },
+        "depth": {
+          "type": "string",
+          "description": "Profundidade da análise: basic, intermediate, advanced",
+          "default": "intermediate"
+        }
+      },
+      "tags": ["analysis", "synthesis", "research"]
+    },
+    {
+      "id": "get_statistics",
+      "name": "Obter Estatísticas",
+      "description": "Retorna estatísticas da base de conhecimento",
+      "parameters": {},
+      "tags": ["stats", "metadata"]
+    }
+  ],
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "max_concurrent_tasks": 10,
+    "supported_content_types": ["text/plain", "application/json", "text/markdown"],
+    "async_operations": true,
+    "multi_turn_dialog": true
+  },
+  "authentication": {
+    "type": "none",
+    "supportsAuthenticatedExtendedCard": false
+  },
+  "defaultInputModes": ["text", "json"],
+  "defaultOutputModes": ["text", "json", "markdown"],
+  "endpoints": {
+    "agent_card": "/.well-known/agent.json",
+    "tasks": "/tasks",
+    "health": "/health"
+  },
+  "metadata": {
+    "language": "pt-BR",
+    "timezone": "America/Sao_Paulo",
+    "update_frequency": "realtime",
+    "data_sources": ["RAG Server", "MCP Integration"]
+  }
+}
