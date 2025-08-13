@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Verificar TODOS os 8 agentes para hooks obrigatórios",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Identificar agentes sem hooks completos",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Adicionar hooks faltantes",
+    "status": "completed",
+    "id": "3"
+  },
+  {
+    "content": "Padronizar formato de todos os hooks",
+    "status": "completed",
+    "id": "4"
+  },
+  {
+    "content": "Validar com coherence-checker",
+    "status": "completed",
+    "id": "5"
+  },
+  {
+    "content": "Repetir até score 100/100",
+    "status": "completed",
+    "id": "6"
+  }
+]
